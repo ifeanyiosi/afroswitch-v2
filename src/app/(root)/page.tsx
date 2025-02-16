@@ -10,28 +10,16 @@ import Link from "next/link";
 import React from "react";
 
 interface HeroProps {
-  title: string;
-  date: string;
-  location: string;
+  title?: string;
+  date?: string;
+  location?: string;
 }
 
-const Hero = ({
+const HeroPage = ({
   title = "Afroswitch 2025",
   date = "31 AUGUST 2024: MAIN FESTIVAL",
   location = "malaga FORUM Andalusia, Spain",
 }: HeroProps) => {
-  const randomDate = new Date(
-    2025,
-    Math.floor(Math.random() * 12),
-    Math.floor(Math.random() * 28) + 1
-  );
-  const formattedDate = randomDate.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   return (
     <div className="bg-black relative w-full">
       <div className="fixed inset-[1px] border-[4px] border-primary pointer-events-none z-50" />
@@ -109,7 +97,7 @@ const Hero = ({
 
             <div className="flex items-center gap-2">
               <Calendar className="w-6 h-6 text-primary" />
-              <span className="text-xl">{formattedDate}</span>
+              <span className="text-xl">{date}</span>
             </div>
           </div>
         </div>
@@ -197,4 +185,4 @@ const Hero = ({
   );
 };
 
-export default Hero;
+export default HeroPage;
