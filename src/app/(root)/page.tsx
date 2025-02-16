@@ -9,17 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-interface HeroProps {
-  title?: string;
-  date?: string;
-  location?: string;
-}
-
-const HeroPage = ({
-  title = "Afroswitch 2025",
-  date = "31 AUGUST 2024: MAIN FESTIVAL",
-  location = "malaga FORUM Andalusia, Spain",
-}: HeroProps) => {
+const HeroPage = () => {
   return (
     <div className="bg-black relative w-full">
       <div className="fixed inset-[1px] border-[4px] border-primary pointer-events-none z-50" />
@@ -64,11 +54,11 @@ const HeroPage = ({
               Canada&apos;s Biggest Afro Music Festival
             </p>
             <h1 className="text-white text-4xl md:text-6xl lg:text-[100px] uppercase font-bold mb-6">
-              {title}
+              Afroswitch 2025
             </h1>
             <div className="space-y-2">
               <p className="text-primary text-[16px] font-semibold">
-                {date + location}
+                31 AUGUST 2024
               </p>
             </div>
           </div>
@@ -97,7 +87,7 @@ const HeroPage = ({
 
             <div className="flex items-center gap-2">
               <Calendar className="w-6 h-6 text-primary" />
-              <span className="text-xl">{date}</span>
+              <span className="text-xl">31 AUGUST 2024</span>
             </div>
           </div>
         </div>
