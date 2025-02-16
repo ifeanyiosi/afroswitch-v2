@@ -7,37 +7,37 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const ImageCarousel = () => {
   const images = [
     {
-      url: "/images/8.jpg",
+      url: "/images/1.jpg",
       alt: "Beautiful landscape",
       title: "Natural Wonder",
       description: "Discover the beauty of nature",
     },
     {
-      url: "/images/8.jpg",
+      url: "/images/2.jpg",
       alt: "City skyline",
       title: "Urban Life",
       description: "Experience the city lights",
     },
     {
-      url: "/images/8.jpg",
+      url: "/images/3.jpg",
       alt: "Ocean sunset",
       title: "Coastal Dreams",
       description: "Relax by the seaside",
     },
     {
-      url: "/images/8.jpg",
+      url: "/images/4.jpg",
       alt: "Mountain peaks",
       title: "Mountain Majesty",
       description: "Reach new heights",
     },
     {
-      url: "/images/8.jpg",
+      url: "/images/5.jpg",
       alt: "Forest path",
       title: "Forest Walk",
       description: "Explore the wilderness",
     },
     {
-      url: "/images/8.jpg",
+      url: "/images/12.jpg",
       alt: "Desert sands",
       title: "Desert Adventure",
       description: "Journey through the dunes",

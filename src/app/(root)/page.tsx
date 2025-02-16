@@ -49,16 +49,16 @@ const HeroPage = () => {
           className="w-full h-[500px] lg:h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50 uppercase">
-          <div className="h-full w-full flex flex-col justify-center text-center lg:text-left px-4 ">
-            <p className="text-white text-[16px] mb-4">
+          <div className="h-full w-full flex flex-col justify-center text-center lg:text-left px-4 lg:px-0 ">
+            <p className="text-white text-[26px] mb-4">
               Canada&apos;s Biggest Afro Music Festival
             </p>
             <h1 className="text-white text-4xl md:text-6xl lg:text-[100px] uppercase font-bold mb-6">
-              Afroswitch 2025
+              Afroswitch <br /> 2025
             </h1>
             <div className="space-y-2">
-              <p className="text-primary text-[16px] font-semibold">
-                31 AUGUST 2024
+              <p className="text-primary text-[26px] font-semibold">
+                31 AUGUST 2024: MAIN FESTIVAL Calgary, Canada
               </p>
             </div>
           </div>
@@ -79,15 +79,25 @@ const HeroPage = () => {
             LET THE BEAT TAKE OVER
           </h1>
 
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Globe className="w-6 text-primary h-6" />
-              <span className="text-xl">Calgary, Canada</span>
+          <div className=" flex flex-col lg:flex-row items-center gap-10 justify-center lg:justify-between w-full lg:max-w-[500px] ">
+            <div className="flex flex-col items-center  gap-2">
+              <div className="flex items-center gap-2">
+                <Globe className="w-6 text-primary h-6" />
+                <h1 className="text-2xl">WHERE?</h1>
+              </div>
+              <div>
+                <span className="text-base uppercase">Calgary, Canada</span>
+              </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <Calendar className="w-6 h-6 text-primary" />
-              <span className="text-xl">31 AUGUST 2024</span>
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-6 h-6 text-primary" />
+                <h1 className="text-2xl">WHEN?</h1>
+              </div>
+              <div>
+                <span className="text-base">31 AUGUST 2024</span>
+              </div>
             </div>
           </div>
         </div>
@@ -132,36 +142,36 @@ const HeroPage = () => {
       <InstagramGallery
         images={[
           {
-            src: "/images/8.jpg",
-            link: "https://www.instagram.com/afroswitch.ca/reel/C9Q7hXZPhBD/",
+            src: "/images/7.jpg",
+            link: "https://www.instagram.com/afroswitch.ca/",
           },
           {
             src: "/images/8.jpg",
-            link: "https://www.instagram.com/p/CxYzDEF/",
+            link: "https://www.instagram.com/afroswitch.ca/",
           },
           {
-            src: "/images/8.jpg",
-            link: "https://www.instagram.com/afroswitch.ca/reel/C9Q7hXZPhBD/",
+            src: "/images/art-1.jpg",
+            link: "https://www.instagram.com/afroswitch.ca/",
           },
           {
-            src: "/images/8.jpg",
-            link: "https://www.instagram.com/p/CxYzDEF/",
+            src: "/images/art-2.jpg",
+            link: "https://www.instagram.com/afroswitch.ca/",
           },
           {
-            src: "/images/8.jpg",
-            link: "https://www.instagram.com/afroswitch.ca/reel/C9Q7hXZPhBD/",
+            src: "/images/art-3.jpg",
+            link: "https://www.instagram.com/afroswitch.ca/",
           },
           {
-            src: "/images/8.jpg",
-            link: "https://www.instagram.com/p/CxYzDEF/",
+            src: "/images/art-4.jpg",
+            link: "https://www.instagram.com/afroswitch.ca/",
           },
           {
-            src: "/images/8.jpg",
-            link: "https://www.instagram.com/afroswitch.ca/reel/C9Q7hXZPhBD/",
+            src: "/images/art-5.jpg",
+            link: "https://www.instagram.com/afroswitch.ca/",
           },
           {
-            src: "/images/8.jpg",
-            link: "https://www.instagram.com/p/CxYzDEF/",
+            src: "/images/art-6.jpg",
+            link: "https://www.instagram.com/afroswitch.ca/",
           },
         ]}
       />
