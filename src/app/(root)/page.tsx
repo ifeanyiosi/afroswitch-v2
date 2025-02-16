@@ -4,7 +4,8 @@ import CulturalJourneySection from "@/components/CulturalJourneySection";
 import ImageCarousel from "@/components/ImageCarousel";
 import InstagramGallery from "@/components/InstagramGallery";
 import JohnCommunity from "@/components/JoinCommunity";
-import { Calendar, Facebook, Globe, Instagram } from "lucide-react";
+import { Calendar, Globe, Instagram } from "lucide-react";
+import { BsFacebook, BsSnapchat, BsTwitterX } from "react-icons/bs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -17,15 +18,15 @@ const HeroPage = () => {
       {/* Social Media Links */}
       <div className="fixed right-0 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-40">
         <Link
-          href="https://facebook.com"
+          href="https://web.facebook.com/profile.php?id=61559279755750"
           target="_blank"
           rel="noopener noreferrer"
           className="p-3  rounded-full  transition-all duration-300"
         >
-          <Facebook className="w-6 h-6 text-primary" />
+          <BsFacebook className="w-6 h-6 text-primary" />
         </Link>
         <Link
-          href="https://instagram.com"
+          href="https://www.instagram.com/afroswitch.ca"
           target="_blank"
           rel="noopener noreferrer"
           className=" p-3 rounded-full  transition-all duration-300"
@@ -33,12 +34,21 @@ const HeroPage = () => {
           <Instagram className="w-6 h-6 text-primary" />
         </Link>
         <Link
-          href="https://snapchat.com"
+          href="https://www.snapchat.com/add/afroswitch"
           target="_blank"
           rel="noopener noreferrer"
           className=" p-3 rounded-full  transition-all duration-300"
         >
-          <Instagram className="w-6 h-6 text-primary" />
+          <BsSnapchat className="w-6 h-6 text-primary" />
+        </Link>
+
+        <Link
+          href="https://x.com/afroswitch_ca"
+          target="_blank"
+          rel="noopener noreferrer"
+          className=" p-3 rounded-full  transition-all duration-300"
+        >
+          <BsTwitterX className="w-6 h-6 text-primary" />
         </Link>
       </div>
 
