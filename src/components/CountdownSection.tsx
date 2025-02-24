@@ -1,8 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
 const CountdownSection = () => {
+  // Add isLive flag to control countdown visibility
+  const isLive = false; // Set to true when event should show countdown
+
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -19,7 +23,7 @@ const CountdownSection = () => {
       const now = new Date();
       const difference = eventDate.getTime() - now.getTime();
 
-      if (difference > 0) {
+      if (difference > 0 && isLive) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
         const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
         const minutes = Math.floor((difference / (1000 * 60)) % 60);
@@ -27,6 +31,14 @@ const CountdownSection = () => {
         const milliseconds = Math.floor(difference % 1000);
 
         setTimeLeft({ days, hours, minutes, seconds, milliseconds });
+      } else {
+        setTimeLeft({
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+          milliseconds: 0,
+        });
       }
     };
 
@@ -34,19 +46,19 @@ const CountdownSection = () => {
     const timer = setInterval(updateCountdown, 10);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [isLive]);
 
   const padNumber = (num: number, length: number = 2) => {
     return num.toString().padStart(length, "0");
   };
 
   return (
-    <div className="bg-black lg:min-h-screen text-white px-4 py-20">
+    <div className="bg-black text-white px-4 py-20">
       <div className="max-w-[1500px] mx-auto px-4">
         {/* Countdown Section */}
         <div className="text-center mb-16">
           <div className="text-2xl uppercase md:text-4xl font-bold mb-8">
-            Gates open in
+            {isLive ? "Gates open in" : "Coming Soon"}
           </div>
           <div className="flex justify-center items-center gap-2 md:gap-8 text-[#FF5300] mb-8">
             <div className="flex flex-col items-center">
@@ -99,11 +111,18 @@ const CountdownSection = () => {
         {/* Call to Action Section */}
         <div className="text-center">
           <h2 className="text-2xl uppercase md:text-4xl font-bold mb-6">
-            Secure your place and pre-register now
+            {isLive
+              ? "Secure your place and register now"
+              : "Join our newsletter for notifications"}
           </h2>
-          <button className="bg-[#FF5300] hover:bg-[#FF5300]/90 text-white font-bold py-4 px-8 rounded-full text-lg md:text-xl transition-all duration-300 transform hover:scale-105">
-            BUY TICKETS
-          </button>
+          <Link
+            href={
+              isLive ? "https://www.showpass.com/afroswitch24/" : "/newsletter"
+            }
+            className="bg-[#FF5300] hover:bg-[#FF5300]/90 text-white font-bold py-4 px-8 rounded-full text-lg md:text-xl transition-all duration-300 transform hover:scale-105"
+          >
+            {isLive ? "BUY TICKETS" : "JOIN"}
+          </Link>
         </div>
       </div>
     </div>

@@ -31,14 +31,14 @@ export default function MobileMenu() {
         <div className="flex flex-col space-y-8 font-galindo uppercase pt-10">
           <>
             {navLinks.map((item) => (
-              <React.Fragment key={item.name}>
+              <React.Fragment key={item?.name}>
                 <SheetClose asChild>
                   <Link
                     className="text-gray-400 hover:text-primary text-6xl py-2"
-                    href={item.href}
+                    href={item?.href ?? "#"}
                     passHref
                   >
-                    {item.name}
+                    {item?.name}
                   </Link>
                 </SheetClose>
               </React.Fragment>

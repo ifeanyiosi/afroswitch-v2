@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+import Link from "next/link";
+
 interface ImageData {
   src: string;
   link: string;
@@ -29,7 +32,7 @@ export default function InstagramGallery({ images }: InstagramGalleryProps) {
 
               {/* Hover Overlay */}
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <a
+                <Link
                   href={image.link}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -48,7 +51,7 @@ export default function InstagramGallery({ images }: InstagramGalleryProps) {
                     />
                   </svg>
                   <span className="font-medium">View on Instagram</span>
-                </a>
+                </Link>
               </div>
             </div>
           ))}

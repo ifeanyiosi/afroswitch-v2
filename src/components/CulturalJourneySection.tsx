@@ -39,7 +39,7 @@ export default function CulturalJourneySection() {
                     </p>
                     <div className="relative w-full h-48">
                       <Image
-                        src="/images/artboard-1.jpg"
+                        src="/images/18.jpg"
                         fill
                         alt="African Fashion Showcase"
                         className="rounded-lg object-cover"
@@ -64,7 +64,7 @@ export default function CulturalJourneySection() {
                     </p>
                     <div className="relative w-full h-48">
                       <Image
-                        src="/images/food-drink-village.jpg"
+                        src="/images/1.jpg"
                         fill
                         alt="Food and Drink Village"
                         className="rounded-lg object-cover"
@@ -88,7 +88,7 @@ export default function CulturalJourneySection() {
                     </p>
                     <div className="relative w-full h-48">
                       <Image
-                        src="/images/workshops.jpg"
+                        src="/images/10.jpg"
                         fill
                         alt="Cultural Workshops"
                         className="rounded-lg object-cover"

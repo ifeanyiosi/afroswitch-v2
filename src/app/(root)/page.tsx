@@ -9,10 +9,13 @@ import { BsFacebook, BsSnapchat, BsTwitterX } from "react-icons/bs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import MusicSection from "@/components/MusicSection";
+import NewsletterModal from "@/components/NewsletterModal";
 
 const HeroPage = () => {
   return (
     <div className="bg-black relative w-full">
+      <NewsletterModal />
       <div className="fixed inset-[1px] border-[4px] border-primary pointer-events-none z-50" />
 
       {/* Social Media Links */}
@@ -63,11 +66,11 @@ const HeroPage = () => {
             <p className="text-white text-[26px] mb-4">
               Canada&apos;s Biggest Afro Music Festival
             </p>
-            <h1 className="text-white text-4xl md:text-6xl lg:text-[100px] uppercase font-bold mb-6">
+            <h1 className="text-[#FF5300] text-4xl md:text-6xl lg:text-[100px] uppercase font-bold mb-6">
               Afroswitch <br /> 2025
             </h1>
             <div className="space-y-2">
-              <p className="text-primary text-[26px] font-semibold">
+              <p className="text-primary hidden text-[26px] font-semibold">
                 31 AUGUST 2024: MAIN FESTIVAL Calgary, Canada
               </p>
             </div>
@@ -106,22 +109,22 @@ const HeroPage = () => {
                 <h1 className="text-2xl">WHEN?</h1>
               </div>
               <div>
-                <span className="text-base">31 AUGUST 2024</span>
+                <span className="text-base">TBA</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Div B - Right side */}
-        <div className="flex items-center justify-center w-full lg:max-w-[63%]">
+        <div className="flex items-center  justify-center w-full lg:max-w-[63%]">
           <div
-            className="relative w-full  rounded-lg overflow-hidden bg-cover bg-center bg-no-repeat p-6 lg:rotate-[-8deg] hover:lg:rotate-[-0deg] transform"
+            className="relative w-full  rounded-lg bg-[#FFF5D1] overflow-hidden bg-cover bg-center bg-no-repeat p-6  transform"
             style={{
               backgroundImage: `url('https://afromusicfestyeg.com/wp-content/uploads/2025/02/371339423_a980cbb2-4e86-4a0f-a913-536706e40412-scaled.jpg')`,
             }}
           >
-            <div className="absolute inset-0 bg-black/60" />
-            <div className="relative text-white ">
+            <div className="absolute inset-0 bg-[#110700] shadow-lg shadow-[#FFF5D1]/10" />
+            <div className="relative text-[#FFF5D1] ">
               <p className="text-base lg:text-2xl leading-relaxed">
                 AfroSwitch brings the vibrant energy of Afrobeats to the heart
                 of Canada. Similar to the globally renowned Afronation, this
@@ -189,6 +192,7 @@ const HeroPage = () => {
       <CulturalJourneySection />
       <ImageCarousel />
       <CountdownSection />
+      <MusicSection />
       <JohnCommunity />
       <div className="w-full h-[1px]  max-w-[1500px] mx-auto bg-gray-400" />
     </div>

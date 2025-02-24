@@ -7,13 +7,9 @@ export const navLinks = [
     name: "Contact",
     href: "/contact",
   },
+  ,
   {
-    name: "Tickets",
-    href: "/",
+    name: "Events",
+    href: "/events",
   },
-
-  // {
-  //   name: "About",
-  //   href: "#",
-  // },
 ];
