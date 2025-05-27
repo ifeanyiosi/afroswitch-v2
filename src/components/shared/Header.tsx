@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const AfroSwitchHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +25,7 @@ const AfroSwitchHeader = () => {
   const menuItems = [
     { name: "Home", href: "/" },
     { name: "Events", href: "/events" },
-   
+
     { name: "Contact", href: "/contact" },
     {
       name: "Get Tickets",
@@ -49,10 +50,18 @@ const AfroSwitchHeader = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center group">
-              <div className="relative">
+            <Link href="/" className="flex items-center group gap-2">
+              <div className="relative flex items-center ">
+                <div className="w-12 h-12 bg-[#ffdc96] rounded-full flex items-center justify-center shadow-md">
+                  <Image
+                    width={100}
+                    height={100}
+                    src={"/icons/afroswitch-logo.png"}
+                    alt="Afroswitch Logo"
+                  />
+                </div>
                 <h1
-                  className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight transition-all duration-300 group-hover:scale-105"
+                  className="text-2xl sm:text-3xl hidden lg:flex lg:text-4xl font-black tracking-tight transition-all duration-300 group-hover:scale-105"
                   style={{ color: "#ffdc96" }}
                 >
                   AfroSwitch

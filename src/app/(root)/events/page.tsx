@@ -221,7 +221,7 @@ const EventsPage = () => {
                     </div>
                     <div>
                       <p className="text-white font-semibold text-base sm:text-lg">
-                        August 31, 2025{" "}
+                        July 13, 2025{" "}
                         {/* Updated to match countdown if this is the main event */}
                       </p>
                       <p className="text-sm" style={{ color: "#b08d57" }}>
