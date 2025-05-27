@@ -1,120 +1,284 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
-import { Button } from "../ui/button";
-import { navLinks } from "@/constants";
+import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-} from "../ui/navigation-menu";
+import Link from "next/link";
 
-export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+const AfroSwitchHeader = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const menuItems = [
+    { name: "Home", href: "/" },
+    { name: "Events", href: "/events" },
+   
+    { name: "Contact", href: "/contact" },
+    {
+      name: "Get Tickets",
+      href: "https://www.showpass.com/afroswitch24",
+      special: true,
+    },
+  ];
 
   return (
-    <nav className="w-full z-[50] px-4 lg:px-8 mx-auto sticky top-0 bg-[#000] py-6">
-      <div className="flex max-w-[1500px] mx-auto justify-between items-center">
-        <Link href="/">
-          <Image
-            width={100}
-            height={50}
-            src="/icons/afroswitch-logo.png"
-            alt="Afroswitch Logo"
-          />
-        </Link>
-
-        <div className="flex items-center gap-4 ">
-          <Button asChild size="lg" className="uppercase">
-            <Link href="https://www.showpass.com/afroswitch24/">
-              Buy Tickets
-            </Link>
-          </Button>
-
-          <div className="hidden md:block">
-            <NavigationMenu>
-              <NavigationMenuList className="space-x-1">
-                {navLinks.map((item) => (
-                  <NavigationMenuItem key={item?.name}>
-                    <Link
-                      href={item?.href ?? "#"}
-                      className="relative uppercase px-3 py-2 text-lg font-medium text-white transition-all rounded-lg hover:bg-white/10 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-primary after:left-0 after:right-0 after:bottom-0 after:transition-all hover:after:w-full"
-                    >
-                      {item?.name}
-                    </Link>
-                  </NavigationMenuItem>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="flex md:hidden">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 text-white transition-colors hover:bg-white/10 rounded-lg"
-              aria-expanded={isOpen}
-              aria-controls="mobile-menu"
-            >
-              {isOpen ? (
-                <X className="w-10 h-10" aria-hidden="true" />
-              ) : (
-                <Menu className="w-10 h-10" aria-hidden="true" />
-              )}
-              <span className="sr-only">
-                {isOpen ? "Close menu" : "Open menu"}
-              </span>
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      <div
-        id="mobile-menu"
-        className={`md:hidden fixed h-screen top-0 inset-0 bg-gray-900 z-50 transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+    <>
+      {/* Header */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? "bg-black shadow-2xl border-b-2"
+            : "bg-black bg-opacity-95"
         }`}
-        aria-hidden={!isOpen}
+        style={{
+          borderBottomColor: isScrolled ? "#ffdc96" : "transparent",
+        }}
       >
-        <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between p-4 border-b border-white/10">
-            <h1 className="text-xl uppercase font-bold text-white">
-              Afroswitch
-            </h1>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsOpen(false)}
-              className="inline-flex items-center justify-center p-2 text-white rounded-lg hover:bg-white/10"
-            >
-              <X className="w-5 h-5" aria-hidden="true" />
-              <span className="sr-only">Close menu</span>
-            </Button>
-          </div>
-          <div className="px-2 py-4 overflow-y-auto">
-            {navLinks.map((item, index) => (
-              <div key={item?.name}>
-                <Link
-                  href={item?.href ?? "#"}
-                  onClick={() => setIsOpen(false)}
-                  className="block px-4 py-3 text-base font-medium text-white rounded-lg hover:bg-white/10 transition-all"
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            {/* Logo */}
+            <Link href="/" className="flex items-center group">
+              <div className="relative">
+                <h1
+                  className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight transition-all duration-300 group-hover:scale-105"
+                  style={{ color: "#ffdc96" }}
                 >
-                  {item?.name}
-                </Link>
-                {index !== navLinks.length - 1 && (
-                  <div className="border-b border-white/20 my-2"></div>
-                )}
+                  AfroSwitch
+                </h1>
+                <div
+                  className="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"
+                  style={{ backgroundColor: "#d81212" }}
+                />
               </div>
-            ))}
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+              {menuItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className={`relative px-4 lg:px-6 py-2 lg:py-3 text-sm lg:text-base font-semibold transition-all duration-300 rounded-lg group ${
+                    item.special
+                      ? "text-black font-bold"
+                      : "text-white hover:text-white"
+                  }`}
+                  style={{
+                    backgroundColor: item.special ? "#ffdc96" : "transparent",
+                  }}
+                >
+                  {!item.special && (
+                    <>
+                      <div
+                        className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300"
+                        style={{ backgroundColor: "rgba(54, 133, 82, 0.2)" }}
+                      />
+                      <div
+                        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 group-hover:w-3/4 transition-all duration-300"
+                        style={{ backgroundColor: "#368552" }}
+                      />
+                    </>
+                  )}
+
+                  {item.special && (
+                    <div
+                      className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300"
+                      style={{ backgroundColor: "#368552" }}
+                    />
+                  )}
+
+                  <span
+                    className={`relative z-10 ${
+                      item.special ? "group-hover:text-white" : ""
+                    }`}
+                  >
+                    {item.name}
+                  </span>
+
+                  {item.special && (
+                    <div
+                      className="absolute -top-1 -right-1 w-2 h-2 rounded-full animate-pulse"
+                      style={{ backgroundColor: "#d81212" }}
+                    />
+                  )}
+                </a>
+              ))}
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={toggleMenu}
+              className="md:hidden w-10 h-10 flex items-center justify-center text-white hover:bg-white hover:bg-opacity-10 rounded-lg transition-all duration-300"
+            >
+              {isMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
           </div>
         </div>
-      </div>
-    </nav>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-40 md:hidden">
+          <div
+            className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-sm"
+            onClick={toggleMenu}
+          />
+
+          {/* Mobile Menu */}
+          <div
+            className="absolute top-16 sm:top-20 left-4 right-4 bg-black border-2 rounded-2xl shadow-2xl overflow-hidden"
+            style={{ borderColor: "#ffdc96" }}
+          >
+            {/* Menu Header */}
+            <div
+              className="px-6 py-4 border-b"
+              style={{
+                backgroundColor: "rgba(255, 220, 150, 0.1)",
+                borderBottomColor: "#ffdc96",
+              }}
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2
+                    className="text-xl font-bold"
+                    style={{ color: "#ffdc96" }}
+                  >
+                    AfroSwitch
+                  </h2>
+                  <p className="text-sm" style={{ color: "#368552" }}>
+                    Calgary&apos;s Premier African Festival
+                  </p>
+                </div>
+                <div
+                  className="w-3 h-3 rounded-full animate-pulse"
+                  style={{ backgroundColor: "#d81212" }}
+                />
+              </div>
+            </div>
+
+            {/* Menu Items */}
+            <nav className="py-2">
+              {menuItems.map((item, index) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={toggleMenu}
+                  className={`block px-6 py-4 text-base font-semibold transition-all duration-300 border-l-4 ${
+                    item.special
+                      ? "text-black font-bold"
+                      : "text-white border-transparent hover:border-current"
+                  }`}
+                  style={{
+                    backgroundColor: item.special
+                      ? "#ffdc96"
+                      : index % 2 === 0
+                      ? "rgba(54, 133, 82, 0.05)"
+                      : "transparent",
+                    borderLeftColor: item.special ? "#d81212" : "transparent",
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <span>{item.name}</span>
+                    {item.name === "Events" && (
+                      <span
+                        className="text-xs px-2 py-1 rounded-full"
+                        style={{
+                          backgroundColor: "rgba(212, 18, 18, 0.2)",
+                          color: "#d81212",
+                        }}
+                      >
+                        July 13
+                      </span>
+                    )}
+                    {item.special && (
+                      <span
+                        className="text-xs px-2 py-1 rounded-full"
+                        style={{
+                          backgroundColor: "rgba(54, 133, 82, 0.2)",
+                          color: "#368552",
+                        }}
+                      >
+                        Limited
+                      </span>
+                    )}
+                  </div>
+                  {item.name === "Events" && (
+                    <div
+                      className="text-xs mt-1 opacity-70"
+                      style={{ color: "#368552" }}
+                    >
+                      Summer Festival 2025
+                    </div>
+                  )}
+                  {item.special && (
+                    <div
+                      className="text-xs mt-1 opacity-70"
+                      style={{ color: "#368552" }}
+                    >
+                      Early Bird Available
+                    </div>
+                  )}
+                </a>
+              ))}
+            </nav>
+
+            {/* Menu Footer */}
+            <div
+              className="px-6 py-4 border-t"
+              style={{
+                backgroundColor: "rgba(54, 133, 82, 0.1)",
+                borderTopColor: "#368552",
+              }}
+            >
+              <div className="text-center">
+                <div
+                  className="text-sm font-semibold"
+                  style={{ color: "#ffdc96" }}
+                >
+                  Confluence Historic Site
+                </div>
+                <div className="text-xs mt-1" style={{ color: "#368552" }}>
+                  Calgary, Canada • July 13, 2025
+                </div>
+                <div className="mt-3 flex items-center justify-center space-x-2">
+                  <div
+                    className="w-2 h-2 rounded-full animate-pulse"
+                    style={{ backgroundColor: "#d81212" }}
+                  />
+                  <span
+                    className="text-xs font-medium"
+                    style={{ color: "#d81212" }}
+                  >
+                    Tickets Available Now
+                  </span>
+                  <div
+                    className="w-2 h-2 rounded-full animate-pulse"
+                    style={{ backgroundColor: "#d81212" }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
-}
+};
+
+export default AfroSwitchHeader;
