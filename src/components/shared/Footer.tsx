@@ -29,7 +29,7 @@ const Footer = () => {
     {
       title: "Company",
       links: [
-        { name: "About Us", href: "/about" },
+        { name: "Events", href: "/events" },
         { name: "Contact", href: "/contact" },
         { name: "Newsletter", href: "/newsletter" },
       ],
@@ -59,7 +59,7 @@ const Footer = () => {
             <div>
               <h2 className="text-2xl font-bold text-white uppercase">
                 <Link href="/" className="flex items-center space-x-2">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md">
+                  <div className="w-12 h-12 bg-[#ffdc96] rounded-full flex items-center justify-center shadow-md">
                     <Image
                       width={100}
                       height={50}
@@ -67,7 +67,7 @@ const Footer = () => {
                       alt="Afroswitch Logo"
                     />
                   </div>
-                  <h1 className="text-xl uppercase hidden lg:flex font-bold text-white hover:text-primary transition-colors">
+                  <h1 className="text-xl uppercase hidden lg:flex font-bold text-white hover:text-[#ffdc96] transition-colors">
                     Afroswitch
                   </h1>
                 </Link>
@@ -83,7 +83,7 @@ const Footer = () => {
           {/* Footer Sections */}
           {footerSections.map((section) => (
             <div key={section.title} className="space-y-4">
-              <h3 className="text-lg font-semibold text-white uppercase after:content-[''] after:block after:w-12 after:h-1 after:bg-primary after:mt-2">
+              <h3 className="text-lg font-semibold text-white uppercase after:content-[''] after:block after:w-12 after:h-1 after:bg-[#368552] after:mt-2">
                 {section.title}
               </h3>
               <ul className="space-y-3">
@@ -91,7 +91,7 @@ const Footer = () => {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-sm text-gray-400 hover:text-primary transition-colors inline-block focus:ring focus:ring-primary"
+                      className="text-sm text-gray-400 hover:text-[#ffdc96] transition-colors inline-block focus:ring focus:ring-[#368552]"
                     >
                       {link.name}
                     </Link>
@@ -111,13 +111,13 @@ const Footer = () => {
             <div className="flex space-x-6">
               <Link
                 href="/privacy"
-                className="text-sm text-gray-400 hover:text-primary transition-colors focus:ring focus:ring-primary"
+                className="text-sm text-gray-400 hover:text-[#ffdc96] transition-colors focus:ring focus:ring-[#368552]"
               >
                 Privacy Policy
               </Link>
               <Link
                 href="/terms"
-                className="text-sm text-gray-400 hover:text-primary transition-colors focus:ring focus:ring-primary"
+                className="text-sm text-gray-400 hover:text-[#ffdc96] transition-colors focus:ring focus:ring-[#368552]"
               >
                 Terms of Service
               </Link>
@@ -130,7 +130,7 @@ const Footer = () => {
       <Button
         variant="secondary"
         size="icon"
-        className={`fixed bottom-6 right-6 bg-primary text-white  shadow-lg hover:shadow-xl transition-all duration-300 focus:ring focus:ring-blue-400 ${
+        className={`fixed bottom-6 right-6 bg-[#d81212] text-white shadow-lg hover:shadow-xl hover:bg-[#b80f0f] transition-all duration-300 focus:ring focus:ring-[#368552] ${
           showScrollTop
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-10"
@@ -138,7 +138,7 @@ const Footer = () => {
         onClick={scrollToTop}
         aria-label="Scroll to top"
       >
-        <ArrowUp className="w-5 h-5 text-black " />
+        <ArrowUp className="w-5 h-5 text-white" />
       </Button>
     </footer>
   );

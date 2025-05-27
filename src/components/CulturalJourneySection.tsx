@@ -10,7 +10,7 @@ export default function CulturalJourneySection() {
   return (
     <section className="flex flex-col lg:flex-row items-center justify-center lg:min-h-screen px-2  lg:px-16 py-12 bg-[#FFF5D1]">
       <div className="bg-[#110700] w-full max-w-6xl p-2 lg:p-16 rounded-3xl">
-        <div className="flex flex-col lg:flex-row gap-12">
+        <div className="flex flex-col  p-2 lg:flex-row gap-12">
           {/* Left Section - Title */}
           <div className="lg:w-1/2">
             <h2 className="text-3xl lg:text-5xl font-bold uppercase leading-tight text-[#FF5300]">

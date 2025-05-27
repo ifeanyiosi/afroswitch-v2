@@ -77,37 +77,56 @@ const NewsletterModal: React.FC = () => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      style={{ backgroundImage: "url('/images/18.jpg')" }}
+      className="fixed inset-0 z-50 bg-cover bg-center flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       onClick={handleBackdropClick}
     >
       <ToastContainer />
       <div
         ref={modalRef}
-        className="relative w-full max-w-[700px] bg-black rounded-lg overflow-hidden"
+        className="relative w-full max-w-[700px] rounded-lg overflow-hidden border-4"
+        style={{
+          backgroundColor: "#000000",
+          borderColor: "#ffdc96",
+        }}
       >
         {/* Background Image */}
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-30"
+          className="absolute inset-0 bg-cover bg-center opacity-20"
           style={{ backgroundImage: "url('/images/15.jpg')" }}
         />
 
         {/* Content */}
-        <div className="relative p-6 md:p-8">
+        <div
+          className="relative p-6 md:p-8"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.85)" }}
+        >
           {/* Close Button */}
           <button
             onClick={() => setIsOpen(false)}
-            className="absolute top-4 right-4 text-white hover:text-primary transition-colors"
+            className="absolute top-4 right-4 transition-colors p-2 rounded-full border-2"
+            style={{
+              color: "#ffdc96",
+              borderColor: "#368552",
+              backgroundColor: "rgba(54, 133, 82, 0.2)",
+            }}
             aria-label="Close modal"
           >
             <X className="w-6 h-6" />
           </button>
 
           {/* Header */}
-          <div className="text-center mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2">
+          <div className="text-center mb-8">
+            <h2
+              className="text-2xl md:text-3xl font-bold mb-4"
+              style={{ color: "#d81212" }}
+            >
               Join the AfroSwitch Community
             </h2>
-            <p className="text-white text-sm md:text-base">
+            <p
+              className="text-sm md:text-base font-semibold"
+              style={{ color: "#ffdc96" }}
+            >
               Be the first to know about ticket releases, lineup announcements,
               and exclusive offers!
             </p>
@@ -117,7 +136,7 @@ const NewsletterModal: React.FC = () => {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-4 w-full "
+              className="space-y-5 w-full"
             >
               <FormField
                 control={form.control}
@@ -128,12 +147,20 @@ const NewsletterModal: React.FC = () => {
                       <Input
                         type="email"
                         placeholder="Email address"
-                        className="w-full placeholder:text-gray-400 bg-transparent border-[1px] border-gray-400 text-white"
+                        className="w-full h-12 border-2 rounded-lg px-4 font-medium"
+                        style={{
+                          backgroundColor: "rgba(255, 220, 150, 0.1)",
+                          borderColor: "#368552",
+                          color: "#ffdc96",
+                        }}
                         {...field}
                         disabled={loading}
                       />
                     </FormControl>
-                    <FormMessage className="text-sm text-red-500 mt-1" />
+                    <FormMessage
+                      className="text-sm mt-1"
+                      style={{ color: "#d81212" }}
+                    />
                   </FormItem>
                 )}
               />
@@ -146,12 +173,20 @@ const NewsletterModal: React.FC = () => {
                       <Input
                         type="text"
                         placeholder="First name"
-                        className="w-full placeholder:text-gray-400 bg-transparent border-[1px] border-gray-400 text-white"
+                        className="w-full h-12 border-2 rounded-lg px-4 font-medium"
+                        style={{
+                          backgroundColor: "rgba(255, 220, 150, 0.1)",
+                          borderColor: "#368552",
+                          color: "#ffdc96",
+                        }}
                         {...field}
                         disabled={loading}
                       />
                     </FormControl>
-                    <FormMessage className="text-sm text-red-500 mt-1" />
+                    <FormMessage
+                      className="text-sm mt-1"
+                      style={{ color: "#d81212" }}
+                    />
                   </FormItem>
                 )}
               />
@@ -164,12 +199,20 @@ const NewsletterModal: React.FC = () => {
                       <Input
                         type="text"
                         placeholder="Last name"
-                        className="w-full placeholder:text-gray-400 bg-transparent border-[1px] border-gray-400 text-white"
+                        className="w-full h-12 border-2 rounded-lg px-4 font-medium"
+                        style={{
+                          backgroundColor: "rgba(255, 220, 150, 0.1)",
+                          borderColor: "#368552",
+                          color: "#ffdc96",
+                        }}
                         {...field}
                         disabled={loading}
                       />
                     </FormControl>
-                    <FormMessage className="text-sm text-red-500 mt-1" />
+                    <FormMessage
+                      className="text-sm mt-1"
+                      style={{ color: "#d81212" }}
+                    />
                   </FormItem>
                 )}
               />
@@ -183,12 +226,20 @@ const NewsletterModal: React.FC = () => {
                       <Input
                         type="text"
                         placeholder="Phone"
-                        className="w-full placeholder:text-gray-400 bg-transparent border-[1px] border-gray-400 text-white"
+                        className="w-full h-12 border-2 rounded-lg px-4 font-medium"
+                        style={{
+                          backgroundColor: "rgba(255, 220, 150, 0.1)",
+                          borderColor: "#368552",
+                          color: "#ffdc96",
+                        }}
                         {...field}
                         disabled={loading}
                       />
                     </FormControl>
-                    <FormMessage className="text-sm text-red-500 mt-1" />
+                    <FormMessage
+                      className="text-sm mt-1"
+                      style={{ color: "#d81212" }}
+                    />
                   </FormItem>
                 )}
               />
@@ -202,27 +253,53 @@ const NewsletterModal: React.FC = () => {
                       <Input
                         type="text"
                         placeholder="Location"
-                        className="w-full placeholder:text-gray-400 bg-transparent border-[1px] border-gray-400 text-white"
+                        className="w-full h-12 border-2 rounded-lg px-4 font-medium"
+                        style={{
+                          backgroundColor: "rgba(255, 220, 150, 0.1)",
+                          borderColor: "#368552",
+                          color: "#ffdc96",
+                        }}
                         {...field}
                         disabled={loading}
                       />
                     </FormControl>
-                    <FormMessage className="text-sm text-red-500 mt-1" />
+                    <FormMessage
+                      className="text-sm mt-1"
+                      style={{ color: "#d81212" }}
+                    />
                   </FormItem>
                 )}
               />
 
-              <Button type="submit" className="w-full bg-primary ">
+              <Button
+                type="submit"
+                className="w-full h-12 font-bold text-lg border-3 rounded-lg transition-all duration-200 hover:scale-105 transform"
+                style={{
+                  backgroundColor: "#d81212",
+                  color: "#ffdc96",
+                  borderColor: "#368552",
+                  borderWidth: "3px",
+                }}
+              >
                 {loading ? "Submitting..." : "Subscribe Now"}
               </Button>
             </form>
           </Form>
 
           {/* Footer */}
-          <p className="text-white/70 text-xs text-center mt-4">
-            By signing up, you agree to receive updates about AfroSwitch. We
-            respect your privacy and will never share your information.
-          </p>
+          <div
+            className="text-center mt-6 p-4 rounded-lg border-2"
+            style={{
+              color: "#368552",
+              borderColor: "rgba(54, 133, 82, 0.3)",
+              backgroundColor: "rgba(54, 133, 82, 0.1)",
+            }}
+          >
+            <p className="text-xs font-medium">
+              By signing up, you agree to receive updates about AfroSwitch. We
+              respect your privacy and will never share your information.
+            </p>
+          </div>
         </div>
       </div>
     </div>
