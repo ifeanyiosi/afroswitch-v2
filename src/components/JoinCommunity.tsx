@@ -1,7 +1,6 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Mail,
   User,
@@ -14,95 +13,52 @@ import {
   Users,
   Bell,
   Star,
-  LucideProps,
 } from "lucide-react";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 
-interface FormDataState {
+type FormFieldKey = "name" | "email" | "location" | "phone";
+
+interface FormFields {
   name: string;
   email: string;
   location: string;
   phone: string;
 }
 
-interface FormErrors {
-  name?: string;
-  email?: string;
-  location?: string;
-  phone?: string;
-}
-
-type IconType = React.ComponentType<LucideProps>;
-
-interface InputFieldConfig {
-  key: keyof FormDataState;
-  label: string;
-  type: string;
-  icon: IconType;
-  placeholder: string;
-  required?: boolean;
-  validation?: (value: string) => string | undefined;
-}
-
-const JoinCommunity: React.FC = () => {
-  const [formData, setFormData] = useState<FormDataState>({
+const JoinCommunity = () => {
+  const [formData, setFormData] = useState<FormFields>({
     name: "",
     email: "",
     location: "",
     phone: "",
   });
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<Partial<FormFields>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [focusedField, setFocusedField] = useState<keyof FormDataState | "">(
-    ""
-  );
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  const [focusedField, setFocusedField] = useState<FormFieldKey | "">("");
 
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!re.test(email)) return "Please enter a valid email address";
-    return undefined;
+    return re.test(email) ? "" : "Please enter a valid email";
   };
 
   const validatePhone = (phone: string) => {
     if (phone && !/^[\d\s+\-()]+$/.test(phone)) {
       return "Please enter a valid phone number";
     }
-    return undefined;
+    return "";
   };
 
-  const validateField = (field: keyof FormDataState, value: string) => {
+  const validateField = (field: FormFieldKey, value: string) => {
     if (!value.trim()) return "This field is required";
-
-    switch (field) {
-      case "email":
-        return validateEmail(value);
-      case "phone":
-        return validatePhone(value);
-      default:
-        return undefined;
-    }
+    if (field === "email") return validateEmail(value);
+    if (field === "phone") return validatePhone(value);
+    return "";
   };
 
-  const handleInputChange = (field: keyof FormDataState, value: string) => {
+  const handleInputChange = (field: FormFieldKey, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-
-    // Clear error when user starts typing
     if (errors[field]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -112,204 +68,170 @@ const JoinCommunity: React.FC = () => {
     }
   };
 
-  const validateForm = () => {
-    const newErrors: FormErrors = {};
-    let isValid = true;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    Object.keys(formData).forEach((key) => {
-      const field = key as keyof FormDataState;
-      const error = validateField(field, formData[field]);
-      if (error) {
-        newErrors[field] = error;
-        isValid = false;
-      }
+    const newErrors: Partial<FormFields> = {};
+    (Object.keys(formData) as FormFieldKey[]).forEach((key) => {
+      const error = validateField(key, formData[key]);
+      if (error) newErrors[key] = error;
     });
 
     setErrors(newErrors);
-    return isValid;
-  };
-
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
+    if (Object.keys(newErrors).length) return;
 
     setIsSubmitting(true);
-    setIsSuccess(false);
-    setError(null);
-
     try {
       await addDoc(collection(db, "contact"), {
         ...formData,
         submittedAt: Timestamp.now(),
       });
-
       setIsSuccess(true);
       setFormData({ name: "", email: "", location: "", phone: "" });
-      setErrors({});
-
-      setTimeout(() => {
-        setIsSuccess(false);
-      }, 3000);
+      setTimeout(() => setIsSuccess(false), 4000);
     } catch (err) {
-      console.error("Error adding document to Firestore: ", err);
-      setError("Failed to join the community. Please try again later.");
+      console.error("Error:", err);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const inputFields: InputFieldConfig[] = [
-    {
-      key: "name",
-      label: "Full Name",
-      type: "text",
-      icon: User,
-      placeholder: "Enter your full name",
-      required: true,
-    },
-    {
-      key: "email",
-      label: "Email Address",
-      type: "email",
-      icon: Mail,
-      placeholder: "your@email.com",
-      required: true,
-      validation: validateEmail,
-    },
-    {
-      key: "location",
-      label: "Location",
-      type: "text",
-      icon: MapPin,
-      placeholder: "City, Province",
-      required: true,
-    },
-    {
-      key: "phone",
-      label: "Phone Number",
-      type: "tel",
-      icon: Phone,
-      placeholder: "+1 (555) 123-4567",
-      validation: validatePhone,
-    },
+  // Rest of your component remains the same...
+  // Just make sure to cast the field.key to FormFieldKey when needed
+  // For example, in your form fields array:
+
+  const formFields = [
+    { key: "name" as const, icon: User, placeholder: "Your full name" },
+    { key: "email" as const, icon: Mail, placeholder: "your@email.com" },
+    { key: "location" as const, icon: MapPin, placeholder: "City, Province" },
+    { key: "phone" as const, icon: Phone, placeholder: "+1 (555) 123-4567" },
   ];
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-x-hidden w-full">
-      {/* Dynamic Background */}
+    <section
+      className="relative min-h-screen overflow-hidden py-16 lg:py-24"
+      style={{ backgroundColor: "#368552" }}
+    >
+      {/* Background bubbles */}
       <div className="absolute inset-0">
         <div
-          className="absolute w-[800px] h-[800px] rounded-full opacity-10 blur-3xl transition-all duration-1000"
-          style={{
-            background: `radial-gradient(circle, #d81212 0%, transparent 70%)`,
-            left: `${mousePosition.x * 0.3}%`,
-            top: `${mousePosition.y * 0.3}%`,
-          }}
-        />
+          className="absolute top-20 left-10 w-32 h-32 rounded-full blur-xl animate-pulse"
+          style={{ backgroundColor: "rgba(216, 18, 18, 0.3)" }}
+        ></div>
         <div
-          className="absolute w-[600px] h-[600px] rounded-full opacity-15 blur-2xl transition-all duration-700"
-          style={{
-            background: `radial-gradient(circle, #368552 0%, transparent 70%)`,
-            right: `${(100 - mousePosition.x) * 0.2}%`,
-            bottom: `${(100 - mousePosition.y) * 0.2}%`,
-          }}
-        />
-        <div
-          className="absolute w-[400px] h-[400px] rounded-full opacity-20 blur-xl transition-all duration-500"
-          style={{
-            background: `radial-gradient(circle, #ffdc96 0%, transparent 70%)`,
-            left: `${mousePosition.x * 0.1}%`,
-            bottom: `${(100 - mousePosition.y) * 0.1}%`,
-          }}
-        />
+          className="absolute bottom-40 right-20 w-40 h-40 rounded-full blur-xl animate-pulse delay-300"
+          style={{ backgroundColor: "rgba(255, 220, 150, 0.4)" }}
+        ></div>
       </div>
 
-      {/* Floating Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-16">
           <div
-            key={i}
-            className="absolute animate-float"
+            className="inline-flex items-center gap-3 px-8 py-3 rounded-full mb-8 border-4 shadow-2xl transform hover:scale-105 transition-all duration-300"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
+              backgroundColor: "#ffffff",
+              borderColor: "#d81212",
+              boxShadow: "0 10px 30px rgba(216, 18, 18, 0.3)",
             }}
           >
-            <div
-              className="w-2 h-2 rounded-full opacity-40"
-              style={{
-                backgroundColor: ["#d81212", "#368552", "#ffdc96"][
-                  Math.floor(Math.random() * 3)
-                ],
-              }}
+            <Users
+              className="w-6 h-6 animate-pulse"
+              style={{ color: "#368552" }}
             />
+            <span
+              className="font-black tracking-wider text-lg"
+              style={{
+                color: "#d81212",
+                fontFamily: "Impact, Arial Black, sans-serif",
+                textShadow: "1px 1px 0 rgba(255, 220, 150, 0.5)",
+              }}
+            >
+              ✨ JOIN THE VIBE ✨
+            </span>
           </div>
-        ))}
-      </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20">
-        <div className="grid lg:grid-cols-2 lg:gap-16 items-center">
-          {/* Left Content */}
-          <div className="space-y-8 mb-12 lg:mb-0">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full border-2 border-[#ffdc96]/30 bg-[#ffdc96]/10 backdrop-blur-sm">
-                <Users className="w-5 h-5 text-[#ffdc96]" />
-                <span className="text-[#ffdc96] font-semibold tracking-wide">
-                  COMMUNITY
-                </span>
-              </div>
+          <h1
+            className="text-4xl sm:text-5xl lg:text-7xl font-black leading-tight mb-6"
+            style={{
+              fontFamily: "Impact, Arial Black, sans-serif",
+              textShadow:
+                "4px 4px 0 rgba(255, 255, 255, 0.8), 8px 8px 0 rgba(216, 18, 18, 0.3)",
+            }}
+          >
+            <span style={{ color: "#ffffff" }}>BE PART OF</span>
+            <span
+              className="block animate-pulse"
+              style={{
+                color: "#ffdc96",
+                textShadow: "3px 3px 0 #d81212, 6px 6px 0 rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              AFROSWITCH
+            </span>
+            <span
+              className="block"
+              style={{
+                color: "#d81212",
+                fontFamily: "cursive, fantasy",
+                transform: "rotate(-2deg)",
+                display: "inline-block",
+              }}
+            >
+              COMMUNITY! 💃
+            </span>
+          </h1>
+        </div>
 
-              <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase tracking-tight leading-none">
-                <span className="block text-[#d81212] drop-shadow-2xl">
-                  Join the
-                </span>
-                <span className="block bg-gradient-to-r from-[#368552] to-[#ffdc96] text-transparent bg-clip-text">
-                  Community
-                </span>
-              </h2>
+        {/* Grid: Left + Form */}
+        <div className="grid lg:grid-cols-2 gap-16">
+          {/* Left */}
+          <div className="space-y-8">
+            <p className="text-xl leading-relaxed text-white font-serif">
+              Stay connected with Calgary&apos;s vibrant African cultural scene. Get
+              exclusive access to{" "}
+              <span className="font-bold text-[#ffdc96]">
+                early bird tickets
+              </span>
+              , behind-the-scenes content, and{" "}
+              <span className="font-bold text-[#d81212]">VIP experiences</span>.
+            </p>
 
-              <p className="text-lg md:text-xl text-gray-300 max-w-md leading-relaxed">
-                Stay connected with Calgary's vibrant African cultural scene.
-                Get exclusive access to
-                <span className="text-[#ffdc96] font-semibold">
-                  {" "}
-                  early bird tickets
-                </span>
-                , behind-the-scenes content, and
-                <span className="text-[#368552] font-semibold">
-                  {" "}
-                  VIP experiences
-                </span>
-                .
-              </p>
-            </div>
-
-            {/* Feature Pills */}
-            <div className="flex flex-wrap gap-3">
+            {/* Features */}
+            <div className="space-y-4">
               {[
-                { icon: Bell, text: "First to Know", color: "#d81212" },
-                { icon: Star, text: "VIP Access", color: "#368552" },
-                { icon: Heart, text: "Exclusive Content", color: "#ffdc96" },
-              ].map((feature, index) => (
+                {
+                  icon: Bell,
+                  text: "First to know about events",
+                  color: "#d81212",
+                },
+                {
+                  icon: Star,
+                  text: "Exclusive member perks",
+                  color: "#ffdc96",
+                },
+                {
+                  icon: Heart,
+                  text: "Special community offers",
+                  color: "#ffffff",
+                },
+              ].map((feature, i) => (
                 <div
-                  key={index}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-sm border"
+                  key={i}
+                  className="flex items-center gap-4 p-4 rounded-xl border-4 transform hover:scale-105 transition-all duration-300"
                   style={{
-                    borderColor: `${feature.color}40`,
-                    backgroundColor: `${feature.color}15`,
+                    backgroundColor: "rgba(255, 255, 255, 0.1)",
+                    borderColor: feature.color,
                   }}
                 >
-                  <feature.icon
-                    className="w-4 h-4"
-                    style={{ color: feature.color }}
-                  />
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: feature.color }}
+                  >
+                    <feature.icon className="w-6 h-6 text-[#368552]" />
+                  </div>
                   <span
-                    className="text-sm font-medium"
+                    className="text-lg font-bold"
                     style={{ color: feature.color }}
                   >
                     {feature.text}
@@ -319,204 +241,115 @@ const JoinCommunity: React.FC = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-4 md:gap-6 pt-8">
-              <div className="text-center p-4 md:p-6 rounded-2xl bg-gradient-to-br from-[#d81212]/20 to-[#d81212]/5 backdrop-blur-sm border border-[#d81212]/30">
-                <div className="text-3xl md:text-4xl font-bold text-[#d81212] mb-2">
-                  2.5K+
-                </div>
-                <div className="text-gray-400 text-xs md:text-sm uppercase tracking-wider">
-                  Community Members
+            <div className="grid grid-cols-2 gap-4 pt-8">
+              <div
+                className="text-center p-6 rounded-2xl border-4 transform hover:scale-105 transition-all duration-300"
+                style={{
+                  backgroundColor: "rgba(216, 18, 18, 0.2)",
+                  borderColor: "#ffdc96",
+                }}
+              >
+                <div className="text-4xl font-black mb-2 text-white">2.5K+</div>
+                <div className="text-sm uppercase tracking-wider text-[#ffdc96]">
+                  Members
                 </div>
               </div>
-              <div className="text-center p-4 md:p-6 rounded-2xl bg-gradient-to-br from-[#368552]/20 to-[#368552]/5 backdrop-blur-sm border border-[#368552]/30">
-                <div className="text-3xl md:text-4xl font-bold text-[#368552] mb-2">
-                  50+
-                </div>
-                <div className="text-gray-400 text-xs md:text-sm uppercase tracking-wider">
-                  Events Hosted
+              <div
+                className="text-center p-6 rounded-2xl border-4 transform hover:scale-105 transition-all duration-300"
+                style={{
+                  backgroundColor: "rgba(255, 220, 150, 0.2)",
+                  borderColor: "#d81212",
+                }}
+              >
+                <div className="text-4xl font-black mb-2 text-white">50+</div>
+                <div className="text-sm uppercase tracking-wider text-[#d81212]">
+                  Events
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Form */}
-          <div className="relative">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#d81212]/20 via-[#368552]/20 to-[#ffdc96]/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+          {/* Right - Form */}
+          <div>
+            {!isSuccess ? (
+              <form
+                onSubmit={handleSubmit}
+                className="bg-white rounded-3xl border-4 p-8 lg:p-10 shadow-2xl"
+                style={{
+                  borderColor: "#d81212",
+                  boxShadow: "0 20px 50px rgba(216, 18, 18, 0.3)",
+                }}
+              >
+                <h2 className="text-3xl font-black mb-6 text-center text-[#368552] font-impact">
+                  JOIN US NOW!
+                </h2>
 
-              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 lg:p-10">
-                {!isSuccess ? (
-                  <div className="space-y-6">
-                    <div className="text-center mb-6">
-                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                        Get Started
-                      </h3>
-                      <p className="text-gray-400">
-                        Join thousands of culture enthusiasts
+                {formFields.map((field) => (
+                  <div key={field.key} className="mb-6">
+                    <div className="relative">
+                      <field.icon
+                        className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
+                          focusedField === field.key || formData[field.key]
+                            ? "text-[#d81212]"
+                            : "text-gray-400"
+                        }`}
+                      />
+                      <input
+                        type={field.key === "email" ? "email" : "text"}
+                        value={formData[field.key]}
+                        onChange={(e) =>
+                          handleInputChange(field.key, e.target.value)
+                        }
+                        onFocus={() => setFocusedField(field.key)}
+                        onBlur={() => setFocusedField("")}
+                        placeholder={field.placeholder}
+                        className={`w-full pl-12 pr-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 ${
+                          errors[field.key]
+                            ? "border-red-500 focus:ring-red-200"
+                            : "border-gray-300 focus:border-[#368552] focus:ring-[#368552]/50"
+                        }`}
+                      />
+                    </div>
+                    {errors[field.key] && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors[field.key]}
                       </p>
-                    </div>
-
-                    {error && (
-                      <div
-                        className="p-3 mb-4 text-sm text-red-400 bg-red-900/30 rounded-lg border border-red-400/50"
-                        role="alert"
-                      >
-                        {error}
-                      </div>
                     )}
-
-                    {inputFields.map((field) => {
-                      const Icon = field.icon;
-                      const isFocused = focusedField === field.key;
-                      const hasValue = formData[field.key].length > 0;
-                      const fieldError = errors[field.key];
-
-                      return (
-                        <div key={field.key} className="space-y-2">
-                          <label
-                            className="block text-xs md:text-sm font-semibold text-gray-300 uppercase tracking-wider"
-                            htmlFor={field.key}
-                          >
-                            {field.label}
-                            {field.required && (
-                              <span className="text-[#d81212] ml-1">*</span>
-                            )}
-                          </label>
-
-                          <div className="relative group/input">
-                            <div
-                              className={`absolute inset-0 rounded-xl transition-all duration-300 ${
-                                isFocused
-                                  ? "bg-gradient-to-r from-[#d81212]/20 to-[#368552]/20 shadow-lg shadow-[#ffdc96]/20"
-                                  : "bg-white/5"
-                              } ${fieldError ? "!bg-[#d81212]/10" : ""}`}
-                            />
-                            <div className="relative flex items-center">
-                              <Icon
-                                className={`absolute left-4 w-5 h-5 z-10 transition-all duration-300 ${
-                                  isFocused || hasValue
-                                    ? "text-[#ffdc96]"
-                                    : "text-gray-500"
-                                } ${fieldError ? "!text-[#d81212]" : ""}`}
-                              />
-                              <input
-                                id={field.key}
-                                type={field.type}
-                                value={formData[field.key]}
-                                onChange={(e) =>
-                                  handleInputChange(field.key, e.target.value)
-                                }
-                                onFocus={() => setFocusedField(field.key)}
-                                onBlur={() => {
-                                  setFocusedField("");
-                                  // Validate on blur
-                                  const error = validateField(
-                                    field.key,
-                                    formData[field.key]
-                                  );
-                                  if (error) {
-                                    setErrors((prev) => ({
-                                      ...prev,
-                                      [field.key]: error,
-                                    }));
-                                  }
-                                }}
-                                placeholder={field.placeholder}
-                                required={field.required}
-                                className={`w-full pl-12 pr-4 py-3 md:py-4 bg-transparent border-2 rounded-xl text-white placeholder-gray-500 transition-all duration-300 focus:outline-none ${
-                                  isFocused
-                                    ? "border-[#ffdc96] shadow-lg shadow-[#ffdc96]/20"
-                                    : "border-white/20 hover:border-white/40"
-                                } ${
-                                  fieldError
-                                    ? "!border-[#d81212] !shadow-[#d81212]/20"
-                                    : ""
-                                }`}
-                              />
-                            </div>
-                            {fieldError && (
-                              <p className="mt-1 text-xs text-[#d81212]">
-                                {fieldError}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-
-                    <button
-                      onClick={handleSubmit}
-                      disabled={isSubmitting}
-                      className="group relative w-full overflow-hidden bg-gradient-to-r from-[#d81212] via-[#368552] to-[#ffdc96] p-[2px] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ffdc96] focus:ring-offset-2 focus:ring-offset-black transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <div className="relative bg-black rounded-lg px-6 py-3 md:px-8 md:py-4 group-hover:bg-transparent transition-all duration-300">
-                        <div className="flex items-center justify-center gap-3">
-                          {isSubmitting ? (
-                            <>
-                              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                              <span className="text-white font-semibold text-base md:text-lg">
-                                Joining...
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              <Send className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" />
-                              <span className="text-white font-semibold text-base md:text-lg uppercase tracking-wider">
-                                Join Community
-                              </span>
-                              <Sparkles className="w-5 h-5 text-white group-hover:rotate-12 transition-transform" />
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    </button>
-                    <p className="text-center text-gray-500 text-xs md:text-sm">
-                      By joining, you agree to receive updates about AfroSwitch
-                      events and community news.
-                    </p>
                   </div>
-                ) : (
-                  /* Success State */
-                  <div className="text-center py-8 md:py-12">
-                    <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-[#368552] to-[#ffdc96] rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 animate-pulse">
-                      <CheckCircle className="w-8 h-8 md:w-10 md:h-10 text-black" />
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 md:mb-4">
-                      Welcome to the Community!
-                    </h3>
-                    <p className="text-gray-300 text-base md:text-lg mb-4 md:mb-6">
-                      You're now part of Calgary's premier African cultural
-                      community.
-                    </p>
-                    <div className="flex items-center justify-center gap-2 text-[#ffdc96]">
-                      <Heart className="w-4 h-4 md:w-5 md:h-5 animate-pulse" />
-                      <span className="font-semibold text-sm md:text-base">
-                        Check your email for exclusive content!
-                      </span>
-                      <Heart className="w-4 h-4 md:w-5 md:h-5 animate-pulse" />
-                    </div>
-                  </div>
-                )}
+                ))}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-[#d81212] to-[#368552] text-white font-bold py-4 px-6 rounded-xl text-lg flex items-center justify-center gap-3 transform hover:scale-105 transition-all duration-300"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Sparkles className="animate-spin w-5 h-5" />{" "}
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" /> Join the Community
+                    </>
+                  )}
+                </button>
+              </form>
+            ) : (
+              <div className="bg-white text-center rounded-3xl border-4 p-10 shadow-2xl border-[#d81212]">
+                <CheckCircle className="w-16 h-16 text-[#368552] mx-auto mb-4" />
+                <h2 className="text-2xl font-bold text-[#368552] mb-2">
+                  Success!
+                </h2>
+                <p className="text-lg text-gray-700">
+                  Thanks for joining! We&apos;ll be in touch soon. 🎉
+                </p>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
-      <style jsx>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          50% {
-            transform: translateY(-20px) rotate(180deg);
-          }
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-      `}</style>
-    </div>
+    </section>
   );
 };
 
