@@ -18,7 +18,16 @@ const HeroPage = () => {
   return (
     <div className="bg-black relative w-full">
       <NewsletterModal />
-      <div className="fixed inset-[1px] border-[4px] border-[#ffdc96] pointer-events-none z-50" />
+      <div
+        className="fixed inset-[1px] pointer-events-none z-50"
+        style={{
+          borderWidth: "6px",
+          borderStyle: "solid",
+          borderImageSlice: 1,
+          borderImageSource:
+            "linear-gradient(to right, #d81212, #ffdc96, #368552, black)",
+        }}
+      />
       {/* Social Media Links */}
       <div className="fixed right-2 md:right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-40">
         <Link

@@ -1,18 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"; // Assuming this is for Next.js App Router
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
 
 import React, { useState, useEffect } from "react";
 import {
   Calendar,
   Clock,
   MapPin,
-  Music,
+ 
   Users,
-  Star,
-  Sparkles,
-  Heart,
-  Award,
-  Globe,
+  
+  Drum,
+  Utensils,
+  Palette,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -21,392 +21,386 @@ const EventsPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
 
+  // SUPER VIBRANT COLOR PALETTE
+  const colors = {
+    gold: "#FFDC96",
+    green: "#4CAF50",
+    red: "#FF5252",
+    purple: "#9C27B0",
+    blue: "#2196F3",
+    pink: "#E91E63",
+    yellow: "#FFEB3B",
+  };
+
+  // Animation effects
   useEffect(() => {
     setIsLoaded(true);
-
-    const handleMouseMove = (e: any) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
-
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveFeature((prev) => (prev + 1) % features.length); // Use features.length
+      setActiveFeature((prev) => (prev + 1) % features.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []); // features.length won't change, so [] is fine if features is stable
+  }, []);
 
+  // FUNKY FEATURES
   const features = [
-    { icon: Music, text: "Authentic African Music", color: "#ffdc96" },
-    { icon: Users, text: "Cultural Performances", color: "#368552" },
-    { icon: Globe, text: "International Artists", color: "#d81212" },
-    { icon: Heart, text: "Community Celebration", color: "#ffdc96" }, // Example, color could be different
+    {
+      icon: Drum,
+      text: "🔥 LIVE AFROBEATS 🔥",
+      color: colors.red,
+      bgColor: "rgba(255, 82, 82, 0.15)",
+    },
+    {
+      icon: Utensils,
+      text: "🍗 FOOD GALORE 🍗",
+      color: colors.green,
+      bgColor: "rgba(76, 175, 80, 0.15)",
+    },
+    {
+      icon: Palette,
+      text: "🎨 ART VILLAGE 🎨",
+      color: colors.purple,
+      bgColor: "rgba(156, 39, 176, 0.15)",
+    },
+    {
+      icon: Users,
+      text: "💃 DANCE WORKSHOPS 💃",
+      color: colors.blue,
+      bgColor: "rgba(33, 150, 243, 0.15)",
+    },
   ];
 
+  // FLOATING FUN ELEMENTS
+  const floatingShapes = Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    color: [colors.red, colors.green, colors.purple, colors.blue, colors.pink][
+      i % 5
+    ],
+    size: Math.random() * 40 + 20,
+    position: {
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+    },
+    shape: ["circle", "triangle", "square"][i % 3],
+    animation: {
+      duration: `${Math.random() * 10 + 10}s`,
+      delay: `${Math.random() * 5}s`,
+    },
+  }));
+
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden relative">
-      {/* Animated Background Elements */}
-      <div className="fixed inset-0 opacity-20 pointer-events-none">
-        <div
-          className="absolute w-80 h-80 rounded-full blur-3xl animate-pulse"
-          style={{
-            backgroundColor: "#ffdc96",
-            left: `${mousePosition.x * 0.08}px`,
-            top: `${mousePosition.y * 0.08}px`,
-            transition: "all 0.3s ease-out",
-          }}
-        />
-        <div
-          className="absolute w-60 h-60 rounded-full blur-2xl animate-pulse"
-          style={{
-            backgroundColor: "#368552",
-            right: `${Math.max(0, 300 - mousePosition.x * 0.05)}px`,
-            bottom: `${Math.max(0, 200 - mousePosition.y * 0.05)}px`,
-            transition: "all 0.5s ease-out",
-            animationDelay: "1s",
-          }}
-        />
-      </div>
-      {/* Floating Particles */}
+    <div className="min-h-screen bg-gradient-to-br from-[#FFEB3B] to-[#E91E63] text-white overflow-hidden relative">
+      {/* CRAZY BACKGROUND ELEMENTS */}
       <div className="fixed inset-0 pointer-events-none">
-        {Array.from({ length: 15 }, (_, i) => (
+        {/* BIG COLOR SPLASHES */}
+        <div
+          className="absolute w-[500px] h-[500px] rounded-full blur-[150px] opacity-30 animate-float"
+          style={{
+            backgroundColor: colors.pink,
+            left: "10%",
+            top: "20%",
+            animationDuration: "25s",
+          }}
+        />
+        <div
+          className="absolute w-[600px] h-[600px] rounded-full blur-[180px] opacity-30 animate-float-reverse"
+          style={{
+            backgroundColor: colors.blue,
+            right: "15%",
+            bottom: "15%",
+            animationDuration: "30s",
+            animationDelay: "5s",
+          }}
+        />
+
+        {/* FLOATING SHAPES */}
+        {floatingShapes.map((shape) => (
           <div
-            key={i}
-            className="absolute w-1 h-1 rounded-full animate-pulse" // Consider a subtle movement animation too
+            key={shape.id}
+            className={`absolute animate-float ${
+              shape.shape === "triangle"
+                ? "clip-triangle"
+                : shape.shape === "square"
+                ? "clip-square"
+                : ""
+            }`}
             style={{
-              backgroundColor:
-                i % 3 === 0 ? "#ffdc96" : i % 3 === 1 ? "#368552" : "#d81212",
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 3}s`,
+              backgroundColor: shape.color,
+              width: `${shape.size}px`,
+              height: `${shape.size}px`,
+              left: `${shape.position.x}%`,
+              top: `${shape.position.y}%`,
+              animationDuration: shape.animation.duration,
+              animationDelay: shape.animation.delay,
+              opacity: 0.4,
+              filter: `drop-shadow(0 0 10px ${shape.color})`,
+              rotate: `${Math.random() * 360}deg`,
             }}
           />
         ))}
       </div>
-      {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center justify-center px-4 py-20">
-        <div className="absolute inset-0 bg-black bg-opacity-60" />
 
-        <div
-          className={`relative z-10 text-center max-w-7xl mx-auto transform transition-all duration-1000 ease-out ${
-            // Adjusted duration
-            isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
-          }`}
-        >
-          {/* Main Title */}
-          <div className="relative mb-8">
-            <h1
-              className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-black mb-6 relative drop-shadow-2xl"
-              style={{ color: "#ffdc96" }}
-            >
-              AfroSwitch
-            </h1>
-            <div className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 animate-bounce">
-              <Sparkles
-                className="w-8 h-8 sm:w-12 sm:h-12"
-                style={{ color: "#d81212" }}
-              />
-            </div>
+      {/* MAIN CONTENT */}
+      <div className="relative z-10 max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+        {/* HERO SECTION */}
+        <div className="text-center mb-20">
+          {/* FUNKY TITLE */}
+          <h1
+            className="text-7xl sm:text-8xl md:text-9xl font-extrabold mb-6 animate-pulse"
+            style={{
+              background: `linear-gradient(45deg, ${colors.red}, ${colors.purple}, ${colors.blue})`,
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+              fontFamily: "'Luckiest Guy', cursive",
+              textShadow: "5px 5px 0 rgba(0,0,0,0.1)",
+              letterSpacing: "2px",
+              lineHeight: "1.1",
+            }}
+          >
+            AFROSWITCH
+          </h1>
+
+          {/* SUBTITLE */}
+          <p
+            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8"
+            style={{
+              color: colors.yellow,
+              fontFamily: "'Bungee', cursive",
+              textShadow: "3px 3px 0 rgba(0,0,0,0.2)",
+            }}
+          >
+            CALGARY'S WILDEST CULTURAL PARTY! 🎉
+          </p>
+
+          {/* DATE */}
+          <div
+            className="inline-block px-6 py-3 rounded-full border-4 mb-10 transform hover:rotate-2 transition-transform"
+            style={{
+              backgroundColor: colors.green,
+              borderColor: colors.yellow,
+              fontFamily: "'Bungee Shade', cursive",
+            }}
+          >
+            <span className="text-xl md:text-2xl">✨ JULY 13, 2025 ✨</span>
           </div>
 
-          {/* Animated Subtitle */}
-          <div className="mb-12 space-y-4">
-            <p
-              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light tracking-wide"
-              style={{ color: "#ffdc96" }}
-            >
-              Calgary&apos;s Premier African Cultural Festival
-            </p>
-            <div className="flex justify-center items-center gap-2">
-              <div
-                className="w-2 h-2 rounded-full animate-pulse"
-                style={{ backgroundColor: "#d81212" }}
-              />
-              <span
-                className="text-base sm:text-lg uppercase tracking-widest"
-                style={{ color: "#368552" }}
-              >
-                Summer 2025
-              </span>
-              <div
-                className="w-2 h-2 rounded-full animate-pulse"
-                style={{ backgroundColor: "#d81212" }}
-              />
-            </div>
-          </div>
-
-          {/* CTA Button */}
-          <div className="flex justify-center">
-            <a
-              href="https://www.showpass.com/afroswitch24"
-              target="_blank" // Good practice for external links
-              rel="noopener noreferrer" // Security for external links
-              className="group relative overflow-hidden px-8 sm:px-12 py-4 rounded-full text-lg sm:text-xl font-semibold text-black transition-all duration-300 hover:scale-110 hover:shadow-2xl transform-gpu"
-              style={{ backgroundColor: "#ffdc96" }}
-            >
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ backgroundColor: "#368552" }} // Hover fill color
-              />
-              <div className="relative flex items-center gap-3 group-hover:text-white transition-colors duration-300">
-                <Star className="w-5 h-5" />
-                Get Tickets
-              </div>
-            </a>
-          </div>
+          {/* CTA BUTTON */}
+          <Link
+            href="https://www.showpass.com/afroswitch24"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 hover:scale-110 hover:rotate-2"
+            style={{
+              background: `linear-gradient(45deg, ${colors.red}, ${colors.purple})`,
+              color: "white",
+              fontFamily: "'Bungee', cursive",
+              boxShadow: `0 10px 20px ${colors.purple}80`,
+              border: `4px solid ${colors.yellow}`,
+            }}
+          >
+            🎟️ GRAB YOUR TICKETS NOW! 🎟️
+          </Link>
         </div>
-      </div>
-      {/* Main Event Information Section */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-12 sm:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
-          {/* Event Details Card */}
+
+        {/* EVENT DETAILS */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* MAIN CARD */}
           <div className="lg:col-span-2">
-            <div className="relative group">
-              <div
-                className="relative border-2 rounded-3xl p-6 sm:p-8 md:p-12 hover:shadow-2xl transition-all duration-500"
+            <div
+              className="p-8 rounded-3xl backdrop-blur-sm border-4 transform hover:scale-[1.01] transition-all"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.2)",
+                borderColor: colors.yellow,
+                boxShadow: `0 20px 40px ${colors.purple}40`,
+              }}
+            >
+              <h2
+                className="text-4xl sm:text-5xl font-bold mb-6"
                 style={{
-                  backgroundColor: "rgba(255, 220, 150, 0.05)",
-                  borderColor: "#ffdc96",
+                  color: colors.yellow,
+                  fontFamily: "'Luckiest Guy', cursive",
+                  textShadow: "3px 3px 0 rgba(0,0,0,0.2)",
                 }}
               >
-                <div
-                  className="inline-flex items-center gap-2 border rounded-full px-4 sm:px-6 py-2 mb-6 sm:mb-8"
-                  style={{
-                    backgroundColor: "rgba(212, 18, 18, 0.1)",
-                    borderColor: "#d81212",
-                  }}
-                >
-                  <Star
-                    className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse"
-                    style={{ color: "#d81212" }}
-                  />
-                  <span
-                    className="text-sm sm:text-base font-semibold tracking-wide"
-                    style={{ color: "#d81212" }}
-                  >
-                    FLAGSHIP EVENT
-                  </span>
-                </div>
+                SUMMER AFROSWITCH 2025
+              </h2>
 
-                <h2
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
-                  style={{ color: "#ffdc96" }}
-                >
-                  Summer AfroSwitch 2025
-                </h2>
-                <p
-                  className="text-lg sm:text-xl md:text-2xl mb-8 sm:mb-12 font-light"
-                  style={{ color: "#368552" }} // Using one of the theme colors
-                >
-                  A Celebration of African Culture & Heritage
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12">
-                  <div
-                    className="flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                    style={{
-                      backgroundColor: "rgba(255, 220, 150, 0.1)",
-                      borderColor: "#ffdc96",
-                    }}
-                  >
-                    <div
-                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
-                      style={{ backgroundColor: "#ffdc96" }}
-                    >
-                      <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
-                    </div>
-                    <div>
-                      <p className="text-white font-semibold text-base sm:text-lg">
-                        July 13, 2025{" "}
-                        {/* Updated to match countdown if this is the main event */}
-                      </p>
-                      <p className="text-sm" style={{ color: "#b08d57" }}>
-                        {" "}
-                        {/* Darker shade of ffcd96 */}
-                        Save the Date
-                      </p>
-                    </div>
-                  </div>
-
-                  <div
-                    className="flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                    style={{
-                      backgroundColor: "rgba(54, 133, 82, 0.1)",
-                      borderColor: "#368552",
-                    }}
-                  >
-                    <div
-                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
-                      style={{ backgroundColor: "#368552" }}
-                    >
-                      <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white font-semibold text-base sm:text-lg">
-                        12:00 PM - 11:00 PM
-                      </p>
-                      <p className="text-sm" style={{ color: "#a0f0c0" }}>
-                        {" "}
-                        {/* Lighter shade of green */}
-                        All Day Celebration
-                      </p>
-                    </div>
-                  </div>
-
-                  <Link
-                  href="https://www.google.com/maps?q=Confluence+Historic+Site"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                    className="sm:col-span-2 flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                    style={{
-                      backgroundColor: "rgba(212, 18, 18, 0.1)",
-                      borderColor: "#d81212",
-                    }}
-                  >
-                    <div
-                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
-                      style={{ backgroundColor: "#d81212" }}
-                    >
-                      <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white font-semibold text-base sm:text-lg">
-                        Confluence Historic Site
-                      </p>
-                      <p className="text-sm" style={{ color: "#ffabab" }}>
-                        {" "}
-                        {/* Lighter shade of red */}
-                        Calgary&apos;s Premier Historic Venue
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-
-                <div
-                  className="flex items-center justify-center gap-4 border rounded-2xl py-6 mb-8"
-                  style={{
-                    backgroundColor: "rgba(54, 133, 82, 0.1)",
-                    borderColor: "#368552",
-                  }}
-                >
-                  <Users
-                    className="w-6 h-6 sm:w-8 sm:h-8"
-                    style={{ color: "#368552" }}
-                  />
-                  <div className="text-center">
-                    <p
-                      className="text-2xl sm:text-3xl font-bold"
-                      style={{ color: "#ffdc96" }}
-                    >
-                      5000+
-                    </p>
-                    <p
-                      className="text-xs sm:text-sm uppercase tracking-wider"
-                      style={{ color: "#368552" }}
-                    >
-                      Expected Attendees
-                    </p>
-                  </div>
-                  <Award
-                    className="w-6 h-6 sm:w-8 sm:h-8"
-                    style={{ color: "#d81212" }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* Side Features */}
-          <div className="space-y-6">
-            <div className="text-center mb-8">
-              <h3
-                className="text-2xl sm:text-3xl font-bold mb-4"
-                style={{ color: "#ffdc96" }}
+              <p
+                className="text-xl mb-8"
+                style={{
+                  color: "white",
+                  fontFamily: "'Fredoka One', cursive",
+                }}
               >
-                Experience
-              </h3>
-              <div
-                className="w-16 h-1 mx-auto rounded-full"
-                style={{ backgroundColor: "#d81212" }}
-              />
-            </div>
+                The most EPIC celebration of African culture in Canada! Get
+                ready for non-stop music, dancing, food, and good vibes all day
+                long! 🌍✨
+              </p>
 
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              const isActive = activeFeature === index;
-              // Card background colors when active, from your original structure
-              const activeCardBgColors = [
-                "rgba(255, 220, 150, 0.1)", // For feature with color #ffdc96
-                "rgba(54, 133, 82, 0.1)", // For feature with color #368552
-                "rgba(212, 18, 18, 0.1)", // For feature with color #d81212
-                "rgba(255, 220, 150, 0.1)", // For the 4th feature, assuming it's like the first
-              ];
-
-              return (
+              {/* DETAIL CARDS */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                {/* DATE */}
                 <div
-                  key={index}
-                  className={`p-4 sm:p-6 rounded-2xl border-2 transition-all duration-500 transform ${
-                    isActive
-                      ? "scale-105 shadow-xl"
-                      : "scale-100 hover:scale-102 shadow-md"
-                  }`}
+                  className="p-6 rounded-2xl border-4 transform hover:scale-105 transition-all"
                   style={{
-                    backgroundColor: isActive
-                      ? activeCardBgColors[index % activeCardBgColors.length]
-                      : "rgba(255, 255, 255, 0.03)",
-                    borderColor: isActive
-                      ? feature.color
-                      : "rgba(255, 255, 255, 0.2)",
+                    backgroundColor: colors.red,
+                    borderColor: colors.yellow,
+                    fontFamily: "'Fredoka One', cursive",
                   }}
                 >
                   <div className="flex items-center gap-4">
-                    <div
-                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center transition-all duration-300"
-                      style={{
-                        backgroundColor: isActive
-                          ? feature.color
-                          : "rgba(255, 255, 255, 0.08)",
-                        boxShadow: isActive
-                          ? `0 0 12px ${feature.color}`
-                          : "none",
-                      }}
-                    >
-                      <Icon
-                        className="w-5 h-5 sm:w-6 sm:h-6 transition-colors duration-300"
-                        style={{
-                          color: isActive
-                            ? feature.color === "#ffdc96"
-                              ? "black"
-                              : "white"
-                            : feature.color,
-                        }}
-                      />
-                    </div>
-                    <div className="flex-1">
-                      {" "}
-                      {/* Added flex-1 for text to take available space */}
-                      <p
-                        className="text-base sm:text-lg font-semibold transition-colors duration-300"
-                        style={{ color: isActive ? "white" : "#e0e0e0" }}
-                      >
-                        {feature.text}
-                      </p>
+                    <Calendar className="w-10 h-10" />
+                    <div>
+                      <p className="text-lg font-bold">JULY 13, 2025</p>
+                      <p className="text-sm">SAVE THE DATE!</p>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>{" "}
-          {/* End of Side Features (space-y-6) */}
-        </div>{" "}
-        {/* End of grid */}
-      </div>{" "}
-      {/* End of Main Event Information Section (max-w-7xl) */}
-      {/* You can add a Footer component or section here */}
-    </div> /* End of main container (min-h-screen bg-black) */
+
+                {/* TIME */}
+                <div
+                  className="p-6 rounded-2xl border-4 transform hover:scale-105 transition-all"
+                  style={{
+                    backgroundColor: colors.blue,
+                    borderColor: colors.yellow,
+                    fontFamily: "'Fredoka One', cursive",
+                  }}
+                >
+                  <div className="flex items-center gap-4">
+                    <Clock className="w-10 h-10" />
+                    <div>
+                      <p className="text-lg font-bold">12PM - 11PM</p>
+                      <p className="text-sm">ALL DAY FUN!</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* LOCATION */}
+                <Link
+                  href="https://www.google.com/maps?q=Confluence+Historic+Site"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="sm:col-span-2 p-6 rounded-2xl border-4 transform hover:scale-105 transition-all"
+                  style={{
+                    backgroundColor: colors.green,
+                    borderColor: colors.yellow,
+                    fontFamily: "'Fredoka One', cursive",
+                  }}
+                >
+                  <div className="flex items-center gap-4">
+                    <MapPin className="w-10 h-10" />
+                    <div>
+                      <p className="text-lg font-bold">
+                        CONFLUENCE HISTORIC SITE
+                      </p>
+                      <p className="text-sm">CALGARY'S COOLEST VENUE</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+
+              {/* ATTENDANCE */}
+              <div
+                className="p-6 rounded-2xl border-4 text-center"
+                style={{
+                  backgroundColor: colors.purple,
+                  borderColor: colors.yellow,
+                  fontFamily: "'Bungee', cursive",
+                }}
+              >
+                <p className="text-3xl font-bold">5,000+</p>
+                <p className="text-lg">HAPPY PEOPLE LAST YEAR!</p>
+              </div>
+            </div>
+          </div>
+
+          {/* FEATURES */}
+          <div className="space-y-6">
+            <h3
+              className="text-3xl font-bold text-center"
+              style={{
+                color: colors.yellow,
+                fontFamily: "'Bungee Shade', cursive",
+                textShadow: "3px 3px 0 rgba(0,0,0,0.2)",
+              }}
+            >
+              WHAT'S POPPIN'?
+            </h3>
+
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className={`p-6 rounded-2xl border-4 transform transition-all duration-300 ${
+                  activeFeature === index ? "scale-105" : "hover:scale-103"
+                }`}
+                style={{
+                  backgroundColor: feature.bgColor,
+                  borderColor: feature.color,
+                  fontFamily: "'Fredoka One', cursive",
+                }}
+              >
+                <div className="flex items-center gap-4">
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: feature.color }}
+                  >
+                    <feature.icon className="w-6 h-6" />
+                  </div>
+                  <p className="text-lg font-bold">{feature.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* FUNKY FONTS */}
+      <style jsx global>{`
+        @import url("https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Fredoka+One&family=Luckiest+Guy&display=swap");
+
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-20px) rotate(5deg);
+          }
+        }
+        @keyframes float-reverse {
+          0%,
+          100% {
+            transform: translateY(0) rotate(0deg);
+          }
+          50% {
+            transform: translateY(20px) rotate(-5deg);
+          }
+        }
+        @keyframes pulse {
+          0%,
+          100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.05);
+          }
+        }
+        .clip-triangle {
+          clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        .clip-square {
+          clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        }
+      `}</style>
+    </div>
   );
 };
 

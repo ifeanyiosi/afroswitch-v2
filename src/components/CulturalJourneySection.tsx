@@ -11,146 +11,77 @@ import { Palette, Utensils, Drum, Sparkles } from "lucide-react";
 
 export default function CulturalJourneySection() {
   return (
-    <section
-      className="relative min-h-screen overflow-hidden py-16 lg:py-24"
-      style={{ backgroundColor: "#FFEB3B" }}
-    >
+    <section className="relative min-h-screen overflow-hidden py-16 sm:py-20 lg:py-24 bg-[#fdf8f3]">
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         {/* Floating Triangles */}
         <div
-          className="absolute top-20 left-10 w-24 h-24 clip-triangle animate-spin"
+          className="absolute top-20 left-10 w-16 sm:w-20 h-16 sm:h-20 clip-triangle animate-spin-slow"
           style={{
-            backgroundColor: "rgba(255, 87, 34, 0.3)",
-            animationDuration: "30s",
+            backgroundColor: "rgba(191, 128, 96, 0.1)",
+            animationDuration: "40s",
           }}
         ></div>
         <div
-          className="absolute bottom-40 right-20 w-32 h-32 clip-triangle animate-spin delay-2000"
+          className="absolute bottom-40 right-20 w-24 sm:w-32 h-24 sm:h-32 clip-triangle animate-spin-slower"
           style={{
-            backgroundColor: "rgba(76, 175, 80, 0.3)",
-            animationDuration: "25s",
+            backgroundColor: "rgba(125, 185, 182, 0.1)",
+            animationDuration: "35s",
           }}
         ></div>
 
         {/* Floating Circles */}
         <div
-          className="absolute top-1/3 right-1/4 w-16 h-16 rounded-full blur-lg animate-bounce"
-          style={{ backgroundColor: "rgba(255, 235, 59, 0.5)" }}
+          className="absolute top-1/3 right-1/4 w-12 sm:w-16 h-12 sm:h-16 rounded-full blur-lg animate-bounce"
+          style={{ backgroundColor: "rgba(255, 213, 153, 0.2)" }}
         ></div>
         <div
-          className="absolute bottom-1/4 left-1/3 w-20 h-20 rounded-full blur-lg animate-bounce delay-1000"
-          style={{ backgroundColor: "rgba(255, 87, 34, 0.4)" }}
+          className="absolute bottom-1/4 left-1/3 w-16 sm:w-20 h-16 sm:h-20 rounded-full blur-lg animate-bounce delay-1000"
+          style={{ backgroundColor: "rgba(241, 170, 145, 0.2)" }}
         ></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 sm:mb-16">
           <div
-            className="inline-flex items-center gap-3 px-8 py-3 rounded-full mb-8 border-4 shadow-2xl transform hover:scale-105 transition-all duration-300"
-            style={{
-              backgroundColor: "#ffffff",
-              borderColor: "#FF5722",
-              boxShadow: "0 10px 30px rgba(255, 87, 34, 0.3)",
-            }}
+            className="inline-flex items-center gap-2 sm:gap-3 px-3 py-1.5 sm:py-2 rounded-full mb-6 sm:mb-8 border-2 bg-white/80 shadow-sm backdrop-blur"
+            style={{ borderColor: "#c0a67d" }}
           >
-            <Sparkles
-              className="w-6 h-6 animate-pulse"
-              style={{ color: "#4CAF50" }}
-            />
-            <span
-              className="font-black tracking-wider text-lg"
-              style={{
-                color: "#FF5722",
-                fontFamily: "Impact, Arial Black, sans-serif",
-                textShadow: "1px 1px 0 rgba(76, 175, 80, 0.5)",
-              }}
-            >
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#a67c52]" />
+            <span className="font-semibold tracking-wide text-xs sm:text-sm text-[#5e4328]">
               ✨ CULTURAL IMMERSION ✨
             </span>
           </div>
 
-          <h1
-            className="text-5xl sm:text-6xl lg:text-8xl font-black leading-tight mb-6"
-            style={{
-              fontFamily: "Impact, Arial Black, sans-serif",
-              textShadow:
-                "4px 4px 0 rgba(255, 255, 255, 0.8), 8px 8px 0 rgba(255, 87, 34, 0.3)",
-            }}
-          >
-            <span style={{ color: "#FF5722" }}>MORE THAN</span>
-            <span
-              className="block animate-pulse"
-              style={{
-                color: "#4CAF50",
-                textShadow: "3px 3px 0 #FF5722, 6px 6px 0 rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              MUSIC
-            </span>
-            <span
-              className="block"
-              style={{
-                color: "#FF5722",
-                fontFamily: "cursive, fantasy",
-                transform: "rotate(-2deg)",
-                display: "inline-block",
-              }}
-            >
-              A CULTURAL JOURNEY! 🌍
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-[#2e2a25]">
+            <span className="text-[#a67c52]">MORE THAN</span>
+            <span className="block text-[#5d8579]">MUSIC</span>
+            <span className="block text-[#a67c52] italic">
+              A CULTURAL JOURNEY!
             </span>
           </h1>
         </div>
 
         {/* Main Content */}
-        <div
-          className="bg-white rounded-3xl border-4 p-8 lg:p-12 shadow-2xl"
-          style={{
-            borderColor: "#4CAF50",
-            boxShadow: "0 20px 50px rgba(76, 175, 80, 0.3)",
-          }}
-        >
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#dfd3c3] p-4 sm:p-6 lg:p-10 shadow-md">
           <Accordion type="single" collapsible className="w-full space-y-6">
             {/* Fashion Accordion */}
-            <AccordionItem value="fashion" className="border-b-0">
-              <AccordionTrigger
-                className="hover:no-underline p-6 rounded-2xl border-4 transition-all duration-300 hover:bg-opacity-90"
-                style={{
-                  backgroundColor: "#FF5722",
-                  borderColor: "#4CAF50",
-                  boxShadow: "0 10px 30px rgba(255, 87, 34, 0.3)",
-                }}
-              >
-                <div className="flex items-center gap-6">
-                  <div
-                    className="w-16 h-16 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: "#4CAF50" }}
-                  >
-                    <Palette className="w-8 h-8 text-white" />
+            <AccordionItem value="fashion">
+              <AccordionTrigger className="p-4 sm:p-6 rounded-xl border bg-[#fdf6ed] hover:bg-[#faefe3] transition">
+                <div className="flex items-center gap-4 sm:gap-6">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-[#a67c52]">
+                    <Palette className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <h3
-                    className="text-2xl lg:text-3xl font-black text-left"
-                    style={{
-                      color: "#FFFFFF",
-                      fontFamily: "Impact, Arial Black, sans-serif",
-                      textShadow: "2px 2px 0 rgba(0, 0, 0, 0.2)",
-                    }}
-                  >
+                  <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-[#3f342c]">
                     AFRICAN FASHION SHOWCASE
                   </h3>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="pt-6">
-                <div className="grid lg:grid-cols-2 gap-8">
+              <AccordionContent className="pt-4 sm:pt-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                   <div>
-                    <p
-                      className="text-lg leading-relaxed"
-                      style={{
-                        color: "#FF5722",
-                        fontFamily: "Georgia, serif",
-                      }}
-                    >
+                    <p className="text-[#5d4c3d] text-sm sm:text-base leading-relaxed">
                       Step into the{" "}
                       <span className="font-bold">Cultural Zone</span> at
                       AfroSwitch and immerse yourself in the rich tapestry of
@@ -158,28 +89,13 @@ export default function CulturalJourneySection() {
                       diversity and creativity of African culture through
                       interactive experiences and live showcases.
                     </p>
-                    <ul
-                      className="mt-4 space-y-2 pl-5"
-                      style={{
-                        color: "#4CAF50",
-                        fontFamily: "Georgia, serif",
-                      }}
-                    >
-                      <li className="relative before:content-['➡️'] before:absolute before:-left-5">
-                        Traditional and contemporary African designs
-                      </li>
-                      <li className="relative before:content-['➡️'] before:absolute before:-left-5">
-                        Live runway shows featuring local designers
-                      </li>
-                      <li className="relative before:content-['➡️'] before:absolute before:-left-5">
-                        Pop-up shops with authentic African textiles
-                      </li>
+                    <ul className="mt-4 space-y-2 pl-5 text-[#7c5e49] text-sm sm:text-base list-disc">
+                      <li>Traditional and contemporary African designs</li>
+                      <li>Live runway shows featuring local designers</li>
+                      <li>Pop-up shops with authentic African textiles</li>
                     </ul>
                   </div>
-                  <div
-                    className="relative h-64 lg:h-full rounded-xl overflow-hidden border-4"
-                    style={{ borderColor: "#FF5722" }}
-                  >
+                  <div className="relative h-56 sm:h-64 lg:h-full rounded-xl overflow-hidden border border-[#cba87c]">
                     <Image
                       src="/images/18.jpg"
                       fill
@@ -192,71 +108,35 @@ export default function CulturalJourneySection() {
             </AccordionItem>
 
             {/* Food Accordion */}
-            <AccordionItem value="food" className="border-b-0">
-              <AccordionTrigger
-                className="hover:no-underline p-6 rounded-2xl border-4 transition-all duration-300 hover:bg-opacity-90"
-                style={{
-                  backgroundColor: "#4CAF50",
-                  borderColor: "#FF5722",
-                  boxShadow: "0 10px 30px rgba(76, 175, 80, 0.3)",
-                }}
-              >
-                <div className="flex items-center gap-6">
-                  <div
-                    className="w-16 h-16 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: "#FF5722" }}
-                  >
-                    <Utensils className="w-8 h-8 text-white" />
+            <AccordionItem value="food">
+              <AccordionTrigger className="p-4 sm:p-6 rounded-xl border bg-[#f6f9f8] hover:bg-[#eaf4f2] transition">
+                <div className="flex items-center gap-4 sm:gap-6">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-[#5d8579]">
+                    <Utensils className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <h3
-                    className="text-2xl lg:text-3xl font-black text-left"
-                    style={{
-                      color: "#FFFFFF",
-                      fontFamily: "Impact, Arial Black, sans-serif",
-                      textShadow: "2px 2px 0 rgba(0, 0, 0, 0.2)",
-                    }}
-                  >
+                  <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-[#32433b]">
                     FOOD & DRINK VILLAGE
                   </h3>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="pt-6">
-                <div className="grid lg:grid-cols-2 gap-8">
+              <AccordionContent className="pt-4 sm:pt-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                   <div>
-                    <p
-                      className="text-lg leading-relaxed"
-                      style={{
-                        color: "#4CAF50",
-                        fontFamily: "Georgia, serif",
-                      }}
-                    >
+                    <p className="text-[#415b53] text-sm sm:text-base leading-relaxed">
                       Indulge in the rich and diverse flavors of African cuisine
                       at our <span className="font-bold">Food Village</span>.
                       From savory street food to gourmet dishes, explore the
                       tastes that define the continent.
                     </p>
-                    <ul
-                      className="mt-4 space-y-2 pl-5"
-                      style={{
-                        color: "#FF5722",
-                        fontFamily: "Georgia, serif",
-                      }}
-                    >
-                      <li className="relative before:content-['🍛'] before:absolute before:-left-5">
+                    <ul className="mt-4 space-y-2 pl-5 text-[#a67c52] text-sm sm:text-base list-disc">
+                      <li>
                         Jollof Rice Wars - Taste different regional varieties
                       </li>
-                      <li className="relative before:content-['🍢'] before:absolute before:-left-5">
-                        Live Suya (spiced skewer) grilling stations
-                      </li>
-                      <li className="relative before:content-['🍹'] before:absolute before:-left-5">
-                        African cocktail bar with palm wine and more
-                      </li>
+                      <li>Live Suya (spiced skewer) grilling stations</li>
+                      <li>African cocktail bar with palm wine and more</li>
                     </ul>
                   </div>
-                  <div
-                    className="relative h-64 lg:h-full rounded-xl overflow-hidden border-4"
-                    style={{ borderColor: "#4CAF50" }}
-                  >
+                  <div className="relative h-56 sm:h-64 lg:h-full rounded-xl overflow-hidden border border-[#a0c1b8]">
                     <Image
                       src="/images/1.jpg"
                       fill
@@ -269,109 +149,29 @@ export default function CulturalJourneySection() {
             </AccordionItem>
 
             {/* Workshops Accordion */}
-            <AccordionItem value="workshops" className="border-b-0">
-              <AccordionTrigger
-                className="hover:no-underline p-6 rounded-2xl border-4 transition-all duration-300 hover:bg-opacity-90"
-                style={{
-                  backgroundColor: "#FF5722",
-                  borderColor: "#4CAF50",
-                  boxShadow: "0 10px 30px rgba(255, 87, 34, 0.3)",
-                }}
-              >
-                <div className="flex items-center gap-6">
-                  <div
-                    className="w-16 h-16 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: "#4CAF50" }}
-                  >
-                    <Drum className="w-8 h-8 text-white" />
+            <AccordionItem value="workshops">
+              <AccordionTrigger className="p-4 sm:p-6 rounded-xl border bg-[#fdf6ed] hover:bg-[#f9ece2] transition">
+                <div className="flex items-center gap-4 sm:gap-6">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-[#a67c52]">
+                    <Drum className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <h3
-                    className="text-2xl lg:text-3xl font-black text-left"
-                    style={{
-                      color: "#FFFFFF",
-                      fontFamily: "Impact, Arial Black, sans-serif",
-                      textShadow: "2px 2px 0 rgba(0, 0, 0, 0.2)",
-                    }}
-                  >
+                  <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-[#3f342c]">
                     CULTURAL WORKSHOPS
                   </h3>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="pt-6">
-                <div className="grid lg:grid-cols-2 gap-8">
-                  <div>
-                    <p
-                      className="text-lg leading-relaxed"
-                      style={{
-                        color: "#FF5722",
-                        fontFamily: "Georgia, serif",
-                      }}
-                    >
-                      Get hands-on with activities that bring African traditions
-                      to life at our{" "}
-                      <span className="font-bold">Interactive Workshops</span>.
-                      Learn from masters of various African arts and crafts.
-                    </p>
-                    <ul
-                      className="mt-4 space-y-2 pl-5"
-                      style={{
-                        color: "#4CAF50",
-                        fontFamily: "Georgia, serif",
-                      }}
-                    >
-                      <li className="relative before:content-['🥁'] before:absolute before:-left-5">
-                        Djembe drumming lessons with master drummers
-                      </li>
-                      <li className="relative before:content-['💃'] before:absolute before:-left-5">
-                        Afrobeats dance classes for all skill levels
-                      </li>
-                      <li className="relative before:content-['🎨'] before:absolute before:-left-5">
-                        Traditional beadwork and textile workshops
-                      </li>
-                    </ul>
-                  </div>
-                  <div
-                    className="relative h-64 lg:h-full rounded-xl overflow-hidden border-4"
-                    style={{ borderColor: "#FF5722" }}
-                  >
-                    <Image
-                      src="/images/10.jpg"
-                      fill
-                      alt="Cultural Workshops"
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
+              <AccordionContent className="pt-4 sm:pt-6">
+                <p className="text-[#5d4c3d] text-sm sm:text-base leading-relaxed">
+                  Discover, learn, and engage through hands-on workshops hosted
+                  by culture bearers and artisans. Dive into drum circles,
+                  storytelling sessions, beadwork, dance, and much more as you
+                  journey deeper into the soul of Africa.
+                </p>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
         </div>
-
-        {/* Bottom Decoration */}
-        <div className="mt-16 text-center">
-          <div className="inline-flex items-center gap-4">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                className={`w-${i % 2 === 0 ? "16" : "4"} h-${
-                  i % 2 === 0 ? "2" : "4"
-                } rounded-full animate-pulse`}
-                style={{
-                  backgroundColor: i % 2 === 0 ? "#4CAF50" : "#FF5722",
-                  animationDelay: `${i * 300}ms`,
-                }}
-              ></div>
-            ))}
-          </div>
-        </div>
       </div>
-
-      {/* Custom CSS for triangle shape */}
-      <style jsx>{`
-        .clip-triangle {
-          clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-        }
-      `}</style>
     </section>
   );
 }

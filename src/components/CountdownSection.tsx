@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { Ticket, CalendarDays, Clock, Mail } from "lucide-react";
 
 const CountdownSection = () => {
-  // Configuration Dates
   const eventTargetDate = new Date("2025-08-31T00:00:00");
   const countdownActivationDate = new Date("2000-01-01T00:00:00");
 
@@ -14,7 +13,6 @@ const CountdownSection = () => {
     hours: 0,
     minutes: 0,
     seconds: 0,
-    milliseconds: 0,
   });
 
   const [isLiveModeActive, setIsLiveModeActive] = useState(false);
@@ -22,247 +20,127 @@ const CountdownSection = () => {
   useEffect(() => {
     const updateCountdown = () => {
       const now = new Date();
-      const currentlyLive = now >= countdownActivationDate;
-      setIsLiveModeActive(currentlyLive);
+      const isLive = now >= countdownActivationDate;
+      setIsLiveModeActive(isLive);
 
-      const difference = eventTargetDate.getTime() - now.getTime();
-
-      if (currentlyLive && difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((difference / (1000 * 60)) % 60);
-        const seconds = Math.floor((difference / 1000) % 60);
-        const milliseconds = Math.floor(difference % 1000);
-
-        setTimeLeft({ days, hours, minutes, seconds, milliseconds });
+      const diff = eventTargetDate.getTime() - now.getTime();
+      if (isLive && diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setTimeLeft({ days, hours, minutes, seconds });
       } else {
-        setTimeLeft({
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-          milliseconds: 0,
-        });
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       }
     };
 
     updateCountdown();
-    const timer = setInterval(updateCountdown, 10);
+    const timer = setInterval(updateCountdown, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const padNumber = (num: number, length: number = 2) => {
-    return num.toString().padStart(length, "0");
-  };
+  const pad = (num: number) => num.toString().padStart(2, "0");
 
   return (
-    <section
-      className="relative min-h-screen overflow-hidden py-16 lg:py-24"
-      style={{ backgroundColor: "#FF5722" }}
-    >
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0">
-        {/* Floating Elements */}
-        <div
-          className="absolute top-20 left-10 w-24 h-24 rounded-full blur-xl animate-pulse"
-          style={{ backgroundColor: "rgba(255, 235, 59, 0.3)" }}
-        ></div>
-        <div
-          className="absolute bottom-40 right-20 w-32 h-32 rotate-45 blur-xl animate-spin"
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.3)",
-            animationDuration: "25s",
-          }}
-        ></div>
-        <div
-          className="absolute top-1/3 right-1/4 w-16 h-16 rounded-full blur-lg animate-bounce"
-          style={{ backgroundColor: "rgba(76, 175, 80, 0.3)" }}
-        ></div>
-      </div>
+    <section className="relative min-h-screen bg-[#fdf6ed] text-gray-900 py-16 sm:py-24 overflow-hidden">
+      {/* Subtle geometric background pattern */}
+      <div
+        className="absolute inset-0 opacity-5 pointer-events-none"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        }}
+      />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-16">
-          <div
-            className="inline-flex items-center gap-3 px-8 py-3 rounded-full mb-8 border-4 shadow-2xl transform hover:scale-105 transition-all duration-300"
-            style={{
-              backgroundColor: "#ffffff",
-              borderColor: "#4CAF50",
-              boxShadow: "0 10px 30px rgba(76, 175, 80, 0.3)",
-            }}
-          >
-            <Clock
-              className="w-6 h-6 animate-pulse"
-              style={{ color: "#FF5722" }}
-            />
-            <span
-              className="font-black tracking-wider text-lg"
-              style={{
-                color: "#4CAF50",
-                fontFamily: "Impact, Arial Black, sans-serif",
-                textShadow: "1px 1px 0 rgba(255, 235, 59, 0.5)",
-              }}
-            >
-              ⏳ COUNTDOWN ⏳
+        <div className="text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 bg-red-600 px-4 py-2 rounded-lg border border-red-500 mb-6 sm:mb-8 select-none">
+            <Clock className="w-4 h-4 text-white" />
+            <span className="uppercase text-xs sm:text-sm tracking-wider text-white font-medium">
+              Live Countdown
             </span>
           </div>
 
-          <h1
-            className="text-4xl sm:text-5xl lg:text-7xl font-black leading-tight mb-6"
-            style={{
-              fontFamily: "Impact, Arial Black, sans-serif",
-              textShadow:
-                "4px 4px 0 rgba(255, 255, 255, 0.8), 8px 8px 0 rgba(76, 175, 80, 0.3)",
-            }}
-          >
-            <span style={{ color: "#FFFFFF" }}>AFROSWITCH</span>
-            <span
-              className="block animate-pulse"
-              style={{
-                color: "#FFEB3B",
-                textShadow: "3px 3px 0 #4CAF50, 6px 6px 0 rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              STARTS IN
-            </span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-gray-900 mb-2">
+            Afroswitch
           </h1>
+          <p className="text-xl sm:text-2xl md:text-3xl text-red-600 font-semibold">
+            Starts In
+          </p>
         </div>
 
-        {/* Countdown Timer */}
-        <div
-          className="bg-white rounded-3xl border-4 p-8 lg:p-12 shadow-2xl mb-16"
-          style={{
-            borderColor: "#4CAF50",
-            boxShadow: "0 20px 50px rgba(76, 175, 80, 0.3)",
-          }}
-        >
-          <div className="text-center mb-8">
-            <h2
-              className="text-2xl md:text-4xl font-bold mb-4"
-              style={{
-                color: "#FF5722",
-                fontFamily: "Impact, Arial Black, sans-serif",
-              }}
+        {/* Countdown Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16">
+          {[
+            { value: timeLeft.days, label: "Days" },
+            { value: timeLeft.hours, label: "Hours" },
+            { value: timeLeft.minutes, label: "Minutes" },
+            { value: timeLeft.seconds, label: "Seconds" },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="bg-gray-800 border border-gray-700 rounded-xl p-6 text-center hover:border-red-500 transition-colors duration-300 cursor-default select-none"
             >
-              {isLiveModeActive ? "GATES OPEN IN" : "COMING SOON"}
-            </h2>
-          </div>
-
-          <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-[#FF5722]">
-            {[
-              { value: timeLeft.days, label: "DAYS" },
-              { value: timeLeft.hours, label: "HOURS" },
-              { value: timeLeft.minutes, label: "MINUTES" },
-              { value: timeLeft.seconds, label: "SECONDS" },
-            ].map((item, index) => (
-              <React.Fragment key={item.label}>
-                <div
-                  className="flex flex-col items-center p-4 rounded-2xl border-4 transform hover:scale-110 transition-all duration-300"
-                  style={{
-                    backgroundColor: "#FFEB3B",
-                    borderColor: "#4CAF50",
-                    minWidth: "120px",
-                  }}
-                >
-                  <span
-                    className="text-4xl md:text-6xl font-bold"
-                    style={{
-                      fontFamily: "Impact, Arial Black, sans-serif",
-                      textShadow: "2px 2px 0 rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
-                    {padNumber(item.value)}
-                  </span>
-                  <span
-                    className="text-sm md:text-base font-bold uppercase"
-                    style={{ color: "#4CAF50" }}
-                  >
-                    {item.label}
-                  </span>
-                </div>
-                {index < 3 && (
-                  <div
-                    className="text-4xl md:text-6xl font-bold"
-                    style={{ color: "#4CAF50" }}
-                  >
-                    :
-                  </div>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
+              <div className="text-4xl sm:text-5xl font-extrabold text-red-400 mb-2">
+                {pad(item.value)}
+              </div>
+              <div className="text-xs sm:text-sm uppercase tracking-wider text-gray-400 font-semibold">
+                {item.label}
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Call to Action */}
-        <div className="text-center">
-          <div className="flex justify-center mb-8">
-            <div
-              className="w-16 h-1 rounded-full animate-pulse"
-              style={{ backgroundColor: "#FFEB3B" }}
-            ></div>
-          </div>
-
-          <h2
-            className="text-2xl md:text-4xl font-bold mb-8"
-            style={{
-              color: "#FFFFFF",
-              fontFamily: "Impact, Arial Black, sans-serif",
-              textShadow: "2px 2px 0 rgba(0, 0, 0, 0.2)",
-            }}
-          >
+        <div className="text-center max-w-2xl mx-auto">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-6 sm:mb-8 text-gray-700">
             {isLiveModeActive
-              ? "SECURE YOUR PLACE NOW!"
-              : "JOIN OUR NEWSLETTER FOR UPDATES"}
+              ? "Don't miss out — secure your spot today"
+              : "Be the first to know when tickets go live"}
           </h2>
 
-          <Link
-            href={
-              isLiveModeActive
-                ? "https://www.showpass.com/afroswitch24/"
-                : "/newsletter"
-            }
-            className="inline-flex items-center gap-3 font-bold px-12 py-6 rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-2 border-4 text-xl shadow-2xl"
-            style={{
-              backgroundColor: isLiveModeActive ? "#4CAF50" : "#FFEB3B",
-              color: isLiveModeActive ? "#FFFFFF" : "#FF5722",
-              borderColor: isLiveModeActive ? "#FFEB3B" : "#4CAF50",
-              fontFamily: "Impact, Arial Black, sans-serif",
-              textShadow: "2px 2px 0 rgba(0, 0, 0, 0.2)",
-              boxShadow: "0 15px 40px rgba(0, 0, 0, 0.2)",
-            }}
-          >
-            {isLiveModeActive ? (
-              <>
-                <Ticket className="w-8 h-8" />
-                BUY TICKETS NOW!
-              </>
-            ) : (
-              <>
-                <Mail className="w-8 h-8" />
-                JOIN THE WAITLIST
-              </>
-            )}
-          </Link>
-
-          {/* Event Date */}
-          <div
-            className="mt-12 inline-flex items-center gap-3 px-6 py-3 rounded-full border-4"
-            style={{
-              backgroundColor: "#4CAF50",
-              borderColor: "#FFEB3B",
-            }}
-          >
-            <CalendarDays className="w-6 h-6" style={{ color: "#FFFFFF" }} />
-            <span
-              className="font-black text-lg"
-              style={{
-                color: "#FFFFFF",
-                fontFamily: "Impact, Arial Black, sans-serif",
-              }}
+          <div className="flex items-center flex-col gap-4">
+            <Link
+              href={
+                isLiveModeActive
+                  ? "https://www.showpass.com/afroswitch24/"
+                  : "/newsletter"
+              }
+              className={`inline-flex items-center gap-3 px-8 py-4 text-lg font-semibold rounded-lg transition-transform duration-300 transform hover:scale-105 active:scale-95 shadow-lg ${
+                isLiveModeActive
+                  ? "bg-red-600 text-white hover:bg-red-700 border-2 border-red-600 hover:border-red-700"
+                  : "bg-white text-gray-900 hover:bg-gray-100 border-2 border-white hover:border-gray-100"
+              }`}
             >
-              🗓️ AUGUST 31, 2025 🎉
-            </span>
+              {isLiveModeActive ? (
+                <>
+                  <Ticket className="w-6 h-6" />
+                  Get Tickets Now
+                </>
+              ) : (
+                <>
+                  <Mail className="w-6 h-6" />
+                  Join Waitlist
+                </>
+              )}
+            </Link>
+
+            {/* Event Date */}
+            <div className="mt-8 sm:mt-10 inline-flex items-center gap-3 px-6 py-3 rounded-lg border border-gray-700 bg-gray-800 select-none">
+              <CalendarDays className="w-5 h-5 text-red-400" />
+              <span className="text-base font-semibold text-white uppercase">
+                August 31, 2025
+              </span>
+            </div>
           </div>
+
+          {/* Additional Info */}
+          <p className="mt-6 sm:mt-8 text-sm sm:text-base text-gray-500 max-w-md mx-auto leading-relaxed">
+            Experience the ultimate fusion of African culture and electronic
+            music
+          </p>
         </div>
       </div>
     </section>

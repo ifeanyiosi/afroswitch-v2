@@ -104,7 +104,7 @@ const NewsletterModal: React.FC = () => {
           {/* Close Button */}
           <button
             onClick={() => setIsOpen(false)}
-            className="absolute top-4 right-4 transition-colors p-2 rounded-full border-2"
+            className="absolute top-0 right-0 transition-colors p-2 rounded-full border-2"
             style={{
               color: "#ffdc96",
               borderColor: "#368552",
