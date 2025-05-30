@@ -25,21 +25,8 @@ const StampedeHero = () => {
   }, []);
 
   return (
-    <div className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-yellow-200 via-orange-200 to-yellow-300">
-      {/* Animated Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, #368552 2px, transparent 2px),
-                           radial-gradient(circle at 75% 75%, #d81212 2px, transparent 2px)`,
-            backgroundSize: "60px 60px",
-            animation: "float 20s ease-in-out infinite alternate",
-          }}
-        ></div>
-      </div>
-
-      {/* Background Images with Ken Burns Effect */}
+    <div className="relative h-screen w-full overflow-hidden bg-black">
+      {/* Background Image */}
       <div className="absolute inset-0">
         {heroImages.map((image, index) => (
           <div
@@ -56,27 +43,8 @@ const StampedeHero = () => {
           />
         ))}
 
-        {/* Dynamic Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-300/30 via-transparent to-yellow-400/40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-transparent to-red-500/10" />
-      </div>
-
-      {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute animate-ping opacity-30"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 4}s`,
-              animationDuration: `${3 + Math.random() * 2}s`,
-            }}
-          >
-            <Star className="w-4 h-4 text-yellow-400" />
-          </div>
-        ))}
+        {/* Rich colored overlay */}
+        <div className="absolute inset-0 bg-black/60" />
       </div>
 
       {/* Main Content */}
@@ -86,93 +54,158 @@ const StampedeHero = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
-          {/* Festival Title with Enhanced Styling */}
-          <div className="mb-12 relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-green-400 via-yellow-400 to-red-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
-            <div className="relative">
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black mb-4 bg-gradient-to-r from-green-600 via-yellow-500 to-red-600 bg-clip-text text-transparent drop-shadow-2xl">
-                AFROSWITCH
-              </h1>
-              <div className="flex items-center justify-center gap-4 mb-6">
-                <Sparkles
-                  className="w-8 h-8 text-yellow-400 animate-bounce"
-                  style={{ animationDelay: "0s" }}
-                />
-                <p className="text-2xl sm:text-4xl font-bold text-white px-8 py-3 rounded-full bg-gradient-to-r from-green-500 to-green-600 shadow-2xl border-4 border-yellow-300">
-                  Music Festival
-                </p>
-                <Sparkles
-                  className="w-8 h-8 text-yellow-400 animate-bounce"
-                  style={{ animationDelay: "0.5s" }}
-                />
-              </div>
-            </div>
+          {/* Brand */}
+          <div className="mb-4">
+            <span
+              className="text-sm font-bold tracking-wider uppercase px-4 py-2 rounded-full border-2"
+              style={{
+                color: "#ffdc96",
+                borderColor: "#ffdc96",
+                backgroundColor: "rgba(255, 220, 150, 0.1)",
+              }}
+            >
+              Afroswitch Presents
+            </span>
           </div>
 
-          {/* Event Info Cards */}
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-8 mb-16">
-            <div className="group relative">
-              <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-red-600 rounded-3xl blur opacity-50 group-hover:opacity-75 transition duration-300"></div>
-              <div className="relative flex items-center gap-4 px-10 py-6 rounded-3xl bg-white shadow-2xl border-4 border-red-500 transform hover:scale-105 hover:-rotate-1 transition-all duration-300">
-                <Calendar className="w-8 h-8 text-green-600" />
-                <div className="text-left">
-                  <p className="text-sm text-gray-600 font-medium">
-                    Event Date
-                  </p>
-                  <p className="text-2xl font-black text-red-600">
-                    July 13, 2025
-                  </p>
-                </div>
-              </div>
+          {/* Main Title */}
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 leading-tight">
+            <span style={{ color: "#d81212" }}>STAMPEDE</span>
+            <span
+              className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mt-2"
+              style={{ color: "#ffdc96" }}
+            >
+              2025
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p
+            className="text-lg sm:text-xl md:text-2xl mb-8 max-w-2xl mx-auto font-semibold"
+            style={{ color: "#368552" }}
+          >
+            African Music Festival
+          </p>
+
+          {/* Event Info */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mb-10">
+            <div
+              className="flex items-center gap-2 px-6 py-3 rounded-full border-2"
+              style={{
+                backgroundColor: "#368552",
+                borderColor: "#ffdc96",
+                color: "white",
+              }}
+            >
+              <Calendar className="w-4 h-4" style={{ color: "#ffdc96" }} />
+              <span className="text-sm font-bold">July 13, 2025</span>
             </div>
 
             <a
               href="https://www.google.com/maps?q=Confluence+Historic+Site"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative cursor-pointer"
             >
-              <div className="absolute -inset-2 bg-gradient-to-r from-green-500 to-green-600 rounded-3xl blur opacity-50 group-hover:opacity-75 transition duration-300"></div>
-              <div className="relative flex items-center gap-4 px-10 py-6 rounded-3xl bg-white shadow-2xl border-4 border-green-500 transform hover:scale-105 hover:rotate-1 transition-all duration-300">
-                <MapPin className="w-8 h-8 text-red-600" />
-                <div className="text-left">
-                  <p className="text-sm text-gray-600 font-medium">Location</p>
-                  <p className="text-2xl font-black text-green-600">
-                    Confluence Historic Site
-                  </p>
-                </div>
+              <div
+                className="flex items-center gap-2 px-6 py-3 rounded-full border-2 cursor-pointer transition hover:scale-105"
+                style={{
+                  backgroundColor: "#d81212",
+                  borderColor: "#ffdc96",
+                  color: "white",
+                }}
+              >
+                <MapPin className="w-4 h-4" style={{ color: "#ffdc96" }} />
+                <span className="text-sm font-bold">
+                  Confluence Historic Site
+                </span>
               </div>
             </a>
           </div>
 
-          {/* Enhanced CTA Button */}
-          <div className="mb-20">
-            <a
-              href="https://www.showpass.com/afroswitch24"
-              className="group relative inline-block"
-            >
-              <div className="absolute -inset-4 bg-gradient-to-r from-yellow-400 via-red-500 to-green-500 rounded-full blur-2xl opacity-60 group-hover:opacity-80 animate-pulse"></div>
-              <div className="relative flex items-center justify-center gap-6 px-16 py-8 rounded-full bg-gradient-to-r from-red-600 to-red-700 text-white font-black text-2xl sm:text-3xl shadow-2xl border-6 border-yellow-300 transform group-hover:scale-110 group-hover:-rotate-2 transition-all duration-300">
-                <Music className="w-10 h-10 group-hover:animate-bounce" />
-                <span className="drop-shadow-lg">Get Your Tickets Now!</span>
-                <Music
-                  className="w-10 h-10 group-hover:animate-bounce"
-                  style={{ animationDelay: "0.2s" }}
-                />
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+            <Button asChild>
+              <Link
+                href={"https://www.showpass.com/afroswitch24"}
+                className="w-full sm:w-auto font-bold px-10 py-4 rounded-full transition-all duration-200 flex items-center justify-center gap-3 text-lg border-3 hover:scale-105 transform"
+                style={{
+                  backgroundColor: "#ffdc96",
+                  color: "#d81212",
+                  borderColor: "#368552",
+                  borderWidth: "3px",
+                }}
+              >
+                <Music className="w-6 h-6" />
+                Buy Tickets
+              </Link>
+            </Button>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl mx-auto">
+            <div className="text-center">
+              <div
+                className="text-2xl sm:text-3xl font-bold"
+                style={{ color: "#d81212" }}
+              >
+                50+
               </div>
-            </a>
+              <div
+                style={{ color: "#ffdc96" }}
+                className="text-sm font-semibold"
+              >
+                Artists
+              </div>
+            </div>
+            <div className="text-center">
+              <div
+                className="text-2xl sm:text-3xl font-bold"
+                style={{ color: "#368552" }}
+              >
+                3
+              </div>
+              <div
+                style={{ color: "#ffdc96" }}
+                className="text-sm font-semibold"
+              >
+                Stages
+              </div>
+            </div>
+            <div className="text-center">
+              <div
+                className="text-2xl sm:text-3xl font-bold"
+                style={{ color: "#d81212" }}
+              >
+                15K+
+              </div>
+              <div
+                style={{ color: "#ffdc96" }}
+                className="text-sm font-semibold"
+              >
+                Attendees
+              </div>
+            </div>
+            <div className="text-center">
+              <div
+                className="text-2xl sm:text-3xl font-bold"
+                style={{ color: "#368552" }}
+              >
+                12H
+              </div>
+              <div
+                style={{ color: "#ffdc96" }}
+                className="text-sm font-semibold"
+              >
+                Music
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Enhanced Scroll Indicator */}
-      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
-        <div className="relative">
-          <div className="absolute -inset-2 bg-gradient-to-r from-green-400 to-yellow-400 rounded-full blur opacity-50 animate-pulse"></div>
-          <div className="relative p-4 rounded-full bg-white/90 shadow-xl border-3 border-green-500 animate-bounce">
-            <ChevronDown className="w-8 h-8 text-red-600" />
-          </div>
-        </div>
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <ChevronDown className="w-6 h-6" style={{ color: "#ffdc96" }} />
       </div>
 
       {/* Refined Image Navigation */}
@@ -181,26 +214,15 @@ const StampedeHero = () => {
           <button
             key={index}
             onClick={() => setCurrentImageIndex(index)}
-            className={`relative h-6 rounded-full transition-all duration-500 shadow-lg transform hover:scale-125 ${
-              index === currentImageIndex ? "w-16" : "w-6"
+            className={`h-3 rounded-full transition-all duration-300 border-2 ${
+              index === currentImageIndex ? "w-8" : "w-3 hover:scale-110"
             }`}
-          >
-            <div
-              className={`absolute inset-0 rounded-full transition-all duration-500 ${
-                index === currentImageIndex
-                  ? "bg-gradient-to-r from-red-500 to-red-600 shadow-red-500/50 shadow-lg"
-                  : "bg-white/80 hover:bg-white"
-              }`}
-              style={{
-                border: `3px solid ${
-                  index === currentImageIndex ? "#ffdc96" : "#368552"
-                }`,
-              }}
-            />
-            {index === currentImageIndex && (
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-400 to-red-500 animate-pulse opacity-50" />
-            )}
-          </button>
+            style={{
+              backgroundColor:
+                index === currentImageIndex ? "#d81212" : "transparent",
+              borderColor: index === currentImageIndex ? "#ffdc96" : "#368552",
+            }}
+          />
         ))}
       </div>
 
